@@ -124,8 +124,8 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             tableIdentity.AddCell(cellIdentityContentLeft);
             cellIdentityContentLeft.Phrase = new Phrase(" ", normal_font);
             tableIdentity.AddCell(cellIdentityContentLeft);
-            cellIdentityContentRight.Phrase = new Phrase($"Sukoharjo, {viewModel.CreatedUtc.AddHours(timeoffset).ToString("dd MMMM yyyy", new CultureInfo("en-US"))}", normal_font);
-            tableIdentity.AddCell(cellIdentityContentRight);
+            cellIdentityContentLeft.Phrase = new Phrase($"Sukoharjo, {viewModel.CreatedUtc.AddHours(timeoffset).ToString("dd MMMM yyyy", new CultureInfo("en-US"))}", normal_font);
+            tableIdentity.AddCell(cellIdentityContentLeft);
             cellIdentityContentLeft.Phrase = new Phrase(" ", normal_font);
             tableIdentity.AddCell(cellIdentityContentLeft);
             cellIdentityContentLeft.Phrase = new Phrase(" ", normal_font);

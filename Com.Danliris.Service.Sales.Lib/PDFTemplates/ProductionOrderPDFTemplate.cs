@@ -33,7 +33,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
 
             string blankString = " ";
             Paragraph bankSpace = new Paragraph(blankString, normal_font);
-            bankSpace.SpacingAfter = 100f;
+            bankSpace.SpacingAfter = 10f;
             document.Add(bankSpace);
 
 
