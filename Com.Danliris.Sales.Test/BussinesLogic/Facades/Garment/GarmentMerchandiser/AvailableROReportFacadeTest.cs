@@ -22,9 +22,9 @@ using Xunit;
 
 namespace Com.Danliris.Sales.Test.BussinesLogic.Facades.Garment.GarmentMerchandiser
 {
-    public class GarmentProductionOrderReportFacadeTest
+    public class AvailableROReportFacadeTest
     {
-        private const string ENTITY = "GarmentProductionOrderReport";
+        private const string ENTITY = "AvailableROReport";
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private string GetCurrentMethod()
@@ -71,8 +71,8 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.Facades.Garment.GarmentMerchandi
                 .Returns(new CostCalculationGarmentLogic(costCalculationGarmentMaterialLogic, serviceProviderMock.Object, identityService, dbContext));
 
             serviceProviderMock
-                .Setup(x => x.GetService(typeof(GarmentProductionOrderReportLogic)))
-                .Returns(new GarmentProductionOrderReportLogic(dbContext, identityService));
+                .Setup(x => x.GetService(typeof(AvailableROReportLogic)))
+                .Returns(new AvailableROReportLogic(dbContext, identityService));
 
             var azureImageFacadeMock = new Mock<IAzureImageFacade>();
             azureImageFacadeMock
@@ -103,37 +103,24 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.Facades.Garment.GarmentMerchandi
             CostCalculationGarmentFacade costCalculationGarmentFacade = new CostCalculationGarmentFacade(serviceProvider, dbContext);
 
             var data = await DataUtil(costCalculationGarmentFacade, serviceProvider, dbContext).GetTestData();
+            var AvailableBy = "AvailableBy";
+            await costCalculationGarmentFacade.AcceptanceCC(new List<long> { data.Id }, AvailableBy);
+            await costCalculationGarmentFacade.AvailableCC(new List<long> { data.Id }, AvailableBy);
 
             var filter = new
             {
-                year = data.DeliveryDate.Year,
-                month = data.DeliveryDate.Month,
-                unit = data.UnitCode,
                 section = data.Section,
-                buyer = data.BuyerBrandCode
+                roNo = data.RO_Number,
+                buyer = data.BuyerBrandCode,
+                availableDateStart = data.ROAvailableDate,
+                availableDateEnd = data.ROAvailableDate,
+                status = "OK"
             };
 
-            var facade = new GarmentProductionOrderReportFacade(serviceProvider);
+            var facade = new AvailableROReportFacade(serviceProvider);
             var Response = facade.Read(filter: JsonConvert.SerializeObject(filter));
 
             Assert.NotEqual(Response.Item2, 0);
-        }
-
-        [Fact]
-        public async void Get_Invalid_Year_Month()
-        {
-            var dbContext = DbContext(GetCurrentMethod());
-            var serviceProvider = GetServiceProviderMock(dbContext).Object;
-
-            CostCalculationGarmentFacade costCalculationGarmentFacade = new CostCalculationGarmentFacade(serviceProvider, dbContext);
-
-            var data = await DataUtil(costCalculationGarmentFacade, serviceProvider, dbContext).GetTestData();
-
-            var facade = new GarmentProductionOrderReportFacade(serviceProvider);
-
-            var error = Assert.Throws<Exception>(() => facade.Read());
-
-            Assert.NotNull(error.Message);
         }
 
         [Fact]
@@ -144,19 +131,22 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.Facades.Garment.GarmentMerchandi
 
             CostCalculationGarmentFacade costCalculationGarmentFacade = new CostCalculationGarmentFacade(serviceProvider, dbContext);
 
-            var dataUtil = DataUtil(costCalculationGarmentFacade, serviceProvider, dbContext);
-            var data = await dataUtil.GetTestData();
-            var data2 = await dataUtil.GetNewData();
-            data2.UOMUnit = $"UOM-{ENTITY}";
-            await dataUtil.GetTestData(data2);
-
-            var facade = new GarmentProductionOrderReportFacade(serviceProvider);
+            var data = await DataUtil(costCalculationGarmentFacade, serviceProvider, dbContext).GetTestData();
+            var AvailableBy = "AvailableBy";
+            await costCalculationGarmentFacade.AcceptanceCC(new List<long> { data.Id }, AvailableBy);
+            await costCalculationGarmentFacade.AvailableCC(new List<long> { data.Id }, AvailableBy);
 
             var filter = new
             {
-                year = data.DeliveryDate.Year,
-                month = data.DeliveryDate.Month,
+                section = data.Section,
+                roNo = data.RO_Number,
+                buyer = data.BuyerBrandCode,
+                availableDateStart = data.ROAvailableDate,
+                availableDateEnd = data.ROAvailableDate,
+                status = "OK"
             };
+
+            var facade = new AvailableROReportFacade(serviceProvider);
             var Response = facade.GenerateExcel(filter: JsonConvert.SerializeObject(filter));
 
             Assert.NotNull(Response.Item2);
@@ -168,13 +158,13 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.Facades.Garment.GarmentMerchandi
             var dbContext = DbContext(GetCurrentMethod());
             var serviceProvider = GetServiceProviderMock(dbContext).Object;
 
-            var facade = new GarmentProductionOrderReportFacade(serviceProvider);
-
             var filter = new
             {
-                year = 1991,
-                month = 1,
+                status = "NOT OK"
             };
+
+            var facade = new AvailableROReportFacade(serviceProvider);
+
             var Response = facade.GenerateExcel(filter: JsonConvert.SerializeObject(filter));
 
             Assert.NotNull(Response.Item2);

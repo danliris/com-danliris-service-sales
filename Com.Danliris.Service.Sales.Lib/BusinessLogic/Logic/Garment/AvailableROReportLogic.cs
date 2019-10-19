@@ -1,7 +1,6 @@
 ﻿using Com.Danliris.Service.Sales.Lib.Models.CostCalculationGarments;
 using Com.Danliris.Service.Sales.Lib.Services;
 using Com.Danliris.Service.Sales.Lib.Utilities.BaseClass;
-using Com.Danliris.Service.Sales.Lib.ViewModels.Garment;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,12 +9,12 @@ using System.Text;
 
 namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.Garment
 {
-    public class AcceptedROReportLogic : BaseMonitoringLogic<CostCalculationGarment>
+    public class AvailableROReportLogic : BaseMonitoringLogic<CostCalculationGarment>
     {
         private SalesDbContext dbContext;
         private readonly IIdentityService identityService;
 
-        public AcceptedROReportLogic(SalesDbContext dbContext, IIdentityService identityService)
+        public AvailableROReportLogic(SalesDbContext dbContext, IIdentityService identityService)
         {
             this.dbContext = dbContext;
             this.identityService = identityService;
@@ -25,7 +24,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.Garment
         {
             Filter filter = JsonConvert.DeserializeObject<Filter>(filterString);
 
-            IQueryable<CostCalculationGarment> Query = dbContext.CostCalculationGarments.Where(cc => cc.IsROAccepted);
+            IQueryable<CostCalculationGarment> Query = dbContext.CostCalculationGarments.Where(cc => cc.IsROAvailable);
 
             if (!string.IsNullOrWhiteSpace(filter.section))
             {
@@ -39,27 +38,39 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.Garment
             {
                 Query = Query.Where(cc => cc.BuyerBrandCode == filter.buyer);
             }
-            if (filter.acceptedDateStart != null)
+            if (filter.availableDateStart != null)
             {
-                var filterDate = filter.acceptedDateStart.GetValueOrDefault().ToOffset(TimeSpan.FromHours(identityService.TimezoneOffset)).Date;
-                Query = Query.Where(cc => cc.ROAcceptedDate.AddHours(identityService.TimezoneOffset).Date >= filterDate);
+                var filterDate = filter.availableDateStart.GetValueOrDefault().ToOffset(TimeSpan.FromHours(identityService.TimezoneOffset)).Date;
+                Query = Query.Where(cc => cc.ROAvailableDate.AddHours(identityService.TimezoneOffset).Date >= filterDate);
             }
-            if (filter.acceptedDateEnd != null)
+            if (filter.availableDateEnd != null)
             {
-                var filterDate = filter.acceptedDateEnd.GetValueOrDefault().ToOffset(TimeSpan.FromHours(identityService.TimezoneOffset)).AddDays(1).Date;
-                Query = Query.Where(cc => cc.ROAcceptedDate.AddHours(identityService.TimezoneOffset).Date < filterDate);
+                var filterDate = filter.availableDateEnd.GetValueOrDefault().ToOffset(TimeSpan.FromHours(identityService.TimezoneOffset)).AddDays(1).Date;
+                Query = Query.Where(cc => cc.ROAvailableDate.AddHours(identityService.TimezoneOffset).Date < filterDate);
+            }
+            if (filter.status != null)
+            {
+                if (filter.status.Equals("OK", StringComparison.OrdinalIgnoreCase))
+                {
+                    Query = Query.Where(cc => cc.ROAcceptedDate.AddHours(identityService.TimezoneOffset).Date.AddDays(2) >= cc.ROAvailableDate.AddHours(identityService.TimezoneOffset).Date);
+                }
+                else if (filter.status.Equals("NOT OK", StringComparison.OrdinalIgnoreCase))
+                {
+                    Query = Query.Where(cc => cc.ROAcceptedDate.AddHours(identityService.TimezoneOffset).Date.AddDays(2) < cc.ROAvailableDate.AddHours(identityService.TimezoneOffset).Date);
+                }
             }
 
             var result = Query.Select(cc => new CostCalculationGarment
             {
                 ROAcceptedDate = cc.ROAcceptedDate,
+                ROAvailableDate = cc.ROAvailableDate,
                 RO_Number = cc.RO_Number,
                 Article = cc.Article,
                 BuyerBrandName = cc.BuyerBrandName,
                 DeliveryDate = cc.DeliveryDate,
                 Quantity = cc.Quantity,
                 UOMUnit = cc.UOMUnit,
-                ROAcceptedBy = cc.ROAcceptedBy
+                ROAvailableBy = cc.ROAvailableBy
             });
 
             return result;
@@ -70,8 +81,9 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.Garment
             public string section { get; set; }
             public string roNo { get; set; }
             public string buyer { get; set; }
-            public DateTimeOffset? acceptedDateStart { get; set; }
-            public DateTimeOffset? acceptedDateEnd { get; set; }
+            public DateTimeOffset? availableDateStart { get; set; }
+            public DateTimeOffset? availableDateEnd { get; set; }
+            public string status { get; set; }
         }
     }
 }
