@@ -31,7 +31,7 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.GarmentROViewModels
                 yield return new ValidationResult("Instruksi harus diisi", new List<string> { "Instruction" });
             }
 
-            if (ImagesFile.Count.Equals(0))
+            if (ImagesFile == null || ImagesFile.Count.Equals(0))
             {
                 yield return new ValidationResult("Gambar harus Ada", new List<string> { "ImageFile" });
             }
