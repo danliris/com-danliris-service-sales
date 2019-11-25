@@ -190,7 +190,20 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
         [Fact]
         public void Validate_ViewModel()
         {
-            RO_GarmentViewModel viewModel = new RO_GarmentViewModel();
+            RO_GarmentViewModel viewModel = new RO_GarmentViewModel
+            {
+                DocumentsFile = new List<string> { null, "qwertyuiop" },
+                RO_Garment_SizeBreakdowns = new List<RO_Garment_SizeBreakdownViewModel>
+                {
+                    new RO_Garment_SizeBreakdownViewModel
+                    {
+                        RO_Garment_SizeBreakdown_Details = new List<RO_Garment_SizeBreakdown_DetailViewModel>
+                        {
+
+                        }
+                    }
+                }
+            };
 
             var defaultValidationResult = viewModel.Validate(null);
             Assert.True(defaultValidationResult.Count() > 0);
