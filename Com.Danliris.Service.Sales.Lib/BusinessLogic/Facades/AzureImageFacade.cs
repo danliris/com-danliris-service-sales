@@ -42,9 +42,9 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades
 			return String.Format("IMG_{0}_{1}", id, Timestamp.Generate(_createdUtc));
 		}
 
-		public string GenerateFileName(int id, DateTime _createdUtc, int index)
+		public string GenerateFileName(int id, DateTime _createdUtc, int index, string prefix = "IMG_")
 		{
-			return String.Format("IMG_{0}_{1}_{2}", id, index, Timestamp.Generate(_createdUtc));
+			return prefix + String.Format("{0}_{1}_{2}", id, index, Timestamp.Generate(_createdUtc));
 		}
 
 		public async Task<string> DownloadImage(string moduleName, string imagePath)
@@ -128,6 +128,29 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades
 			if (beforeImagePaths != null)
 			{
 				List<string> beforePaths = JsonConvert.DeserializeObject<List<string>>(beforeImagePaths);
+				string imagesPath = JsonConvert.SerializeObject(await this.RemoveLeftoverImage(moduleName, beforePaths, afterPaths.ToList<string>()));
+				return imagesPath;
+			}
+
+			return JsonConvert.SerializeObject(afterPaths.ToList<string>());
+		}
+
+		public async Task<string> UploadMultipleFile(string moduleName, int id, DateTime _createdUtc, List<string> filesBase64, List<string> filesName, string beforeFilePaths)
+		{
+			List<Task<string>> uploadTasks = new List<Task<string>>();
+
+			for (int i = 0; i < filesBase64.Count; i++)
+			{
+				string fileBase64 = filesBase64[i];
+				string fileName = string.Concat(GenerateFileName(id, _createdUtc, i, "File"), "_", filesName[i]);
+				uploadTasks.Add(this.UploadBase64Image(moduleName, fileBase64, fileName));
+			}
+
+			string[] afterPaths = await Task.WhenAll(uploadTasks);
+
+			if (beforeFilePaths != null)
+			{
+				List<string> beforePaths = JsonConvert.DeserializeObject<List<string>>(beforeFilePaths);
 				string imagesPath = JsonConvert.SerializeObject(await this.RemoveLeftoverImage(moduleName, beforePaths, afterPaths.ToList<string>()));
 				return imagesPath;
 			}

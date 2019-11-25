@@ -10,6 +10,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface
         Task<string> UploadImage(string moduleName, long id, DateTime _createdUtc, string imageBase64);
         Task<List<string>> DownloadMultipleImages(string moduleName, string imagesPath);
         Task<string> UploadMultipleImage(string moduleName, int id, DateTime _createdUtc, List<string> imagesBase64, string beforeImagePaths);
+        Task<string> UploadMultipleFile(string moduleName, int id, DateTime _createdUtc, List<string> filesBase64, List<string> filesName, string beforeFilePaths);
         Task RemoveMultipleImage(string moduleName, string imagesPath);
     }
 }

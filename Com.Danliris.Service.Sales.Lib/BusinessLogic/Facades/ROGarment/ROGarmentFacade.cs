@@ -1,20 +1,18 @@
-﻿using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface.ROGarmentInterface;
+﻿using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface;
+using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface.CostCalculationGarmentLogic;
+using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface.ROGarmentInterface;
 using Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.ROGarmentLogics;
+using Com.Danliris.Service.Sales.Lib.Helpers;
+using Com.Danliris.Service.Sales.Lib.Models.CostCalculationGarments;
 using Com.Danliris.Service.Sales.Lib.Models.ROGarments;
 using Com.Danliris.Service.Sales.Lib.Services;
-using Microsoft.EntityFrameworkCore;
-using System;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
-using System.Text;
-using Com.Danliris.Service.Sales.Lib.Helpers;
-using System.Threading.Tasks;
-using System.Linq;
 using Com.Danliris.Service.Sales.Lib.Utilities;
-using Com.Danliris.Service.Sales.Lib.Models.CostCalculationGarments;
-using Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.CostCalculationGarments;
-using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface.CostCalculationGarmentLogic;
-using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.ROGarment
 {
@@ -59,13 +57,15 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.ROGarment
                         item.Information = itemModel.Information;
                     }
                 }
-            }
+            }   
             Model.CostCalculationGarment = null;
 
-            Model.ImagesPath = await this.AzureImageFacade.UploadMultipleImage(Model.GetType().Name, (int)Model.Id, Model.CreatedUtc, Model.ImagesFile, Model.ImagesPath);
             roGarmentLogic.Create(Model);
             int created = await DbContext.SaveChangesAsync();
-                        
+
+            Model.ImagesPath = await this.AzureImageFacade.UploadMultipleImage(Model.GetType().Name, (int)Model.Id, Model.CreatedUtc, Model.ImagesFile, Model.ImagesPath);
+            Model.DocumentsPath = await this.AzureImageFacade.UploadMultipleFile(Model.GetType().Name, (int)Model.Id, Model.CreatedUtc, Model.DocumentsFile, Model.DocumentsFileName, Model.DocumentsPath);
+
             await UpdateCostCalAsync(costCalculationGarment, (int)Model.Id);
             return created;
         }
