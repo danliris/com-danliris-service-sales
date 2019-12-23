@@ -528,6 +528,38 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
             int statusCode = GetStatusCode(response);
             Assert.Equal((int)HttpStatusCode.BadRequest, statusCode);
         }
+	[Fact]
+        public void Validate_ViewModel()
+        {
+            List<ProductionOrderViewModel> viewModels = new List<ProductionOrderViewModel>
+            {
+                new ProductionOrderViewModel{
+                    Code = "ABC",
+                    OrderQuantity = 5.48,
+                    LampStandards = new List<ProductionOrder_LampStandardViewModel>{
+                        new ProductionOrder_LampStandardViewModel{
+                            Name = "Lampu",
+                            Description = "Lampu Luar"
+                        }
+                    },
+                    Details = new List<ProductionOrder_DetailViewModel>{
+                        new ProductionOrder_DetailViewModel{
+                            ColorRequest = "A",
+                            Quantity = 5.48,
+                            Uom = new UomViewModel{
+                                Id = 1,
+                                Unit = "MTR"
+                            }
+                        }
+                    }
+                }
+            };
+            foreach (var viewModel in viewModels)
+            {
+                var defaultValidationResult = viewModel.Validate(null);
+                Assert.True(defaultValidationResult.Count() > 0);
+            }
+        }
 
     }
 }
