@@ -16,14 +16,14 @@ using System.Linq;
 
 namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.Garment
 {
-    public class AvailableROGarmentReportFacade : IAvailableROGarmentReportFacade
+    public class LatestAvailableROGarmentReportFacade : ILatestAvailableROGarmentReportFacade
     {
-        private AvailableROGarmentReportLogic logic;
+        private LatestAvailableROGarmentReportLogic logic;
         private IIdentityService identityService;
 
-        public AvailableROGarmentReportFacade(IServiceProvider serviceProvider)
+        public LatestAvailableROGarmentReportFacade(IServiceProvider serviceProvider)
         {
-            logic = serviceProvider.GetService<AvailableROGarmentReportLogic>();
+            logic = serviceProvider.GetService<LatestAvailableROGarmentReportLogic>();
             identityService = serviceProvider.GetService<IIdentityService>();
         }
 
@@ -57,10 +57,10 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.Garment
                 dataTable.Rows.Add(null, null, null, null, null, null, null, null, null, null);
                 dataTable.Rows.Add(null, null, null, null, null, null, null, null, null, null);
 
-                var Count35 = data.Count(d => d.LeadTime == 35);
-                var Count35Ok = data.Count(d => d.DateDiff >= 30 && d.LeadTime == 35);
+                var Count35 = data.Count(d => d.LeadTime == 40);
+                var Count35Ok = data.Count(d => d.DateDiff >= 35 && d.LeadTime == 40);
                 var Percent35Ok = ((decimal)Count35Ok / Count35).ToString("P", new CultureInfo("id-ID"));
-                var Count35NotOk = data.Count(d => d.DateDiff < 30 && d.LeadTime == 35);
+                var Count35NotOk = data.Count(d => d.DateDiff < 35 && d.LeadTime == 40);
                 var Percent35NotOk = ((decimal)Count35NotOk / Count35).ToString("P", new CultureInfo("id-ID"));
 
                 var Count25 = data.Count(d => d.LeadTime == 25);
@@ -76,10 +76,10 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.Garment
                 var PercentNotOk = ((decimal)CountNotOk / Count).ToString("P", new CultureInfo("id-ID"));
 
 
-                dataTable.Rows.Add(null, "KESIAPAN RO GARMENT DENGAN LEAD TIME 30 HARI", null, null, null, null, null, null, null, null);
-                dataTable.Rows.Add(null, "Status OK", null, "Selisih Tgl Penerimaan RO dengan Tgl Shipment >= 30 hari", null, null, null, null, null, null);
+                dataTable.Rows.Add(null, "KESIAPAN RO GARMENT DENGAN LEAD TIME 35 HARI", null, null, null, null, null, null, null, null);
+                dataTable.Rows.Add(null, "Status OK", null, "Selisih Tgl Penerimaan RO dengan Tgl Shipment >= 35 hari", null, null, null, null, null, null);
                 dataTable.Rows.Add(null, "Persentase Status OK", null, $"{Count35Ok}/{Count35} X 100% = {Percent35Ok}", null, null, null, null, null, null);
-                dataTable.Rows.Add(null, "Status NOT OK", null, "Selisih Tgl Penerimaan RO dengan Tgl Shipment < 30 hari", null, null, null, null, null, null);
+                dataTable.Rows.Add(null, "Status NOT OK", null, "Selisih Tgl Penerimaan RO dengan Tgl Shipment < 35 hari", null, null, null, null, null, null);
                 dataTable.Rows.Add(null, "Persentase Status NOT OK", null, $"{Count35NotOk}/{Count35} X 100% = {Percent35NotOk}", null, null, null, null, null, null);
 
                 dataTable.Rows.Add(null, null, null, null, null, null, null, null, null, null);
@@ -125,7 +125,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.Garment
             return string.Join(null, filter.Where(w => w.Value != null).Select(s => string.Concat(" - ", s.Value is string ? s.Value : ((DateTime)s.Value).AddHours(identityService.TimezoneOffset).ToString("dd MMMM yyyy") )).ToArray());
         }
 
-        public Tuple<List<AvailableROGarmentReportViewModel>, int> Read(int page = 1, int size = 25, string filter = "{}")
+        public Tuple<List<LatestAvailableROGarmentReportViewModel>, int> Read(int page = 1, int size = 25, string filter = "{}")
         {
             var Query = logic.GetQuery(filter);
             var data = GetData(Query.ToList());
@@ -133,9 +133,9 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.Garment
             return Tuple.Create(data, data.Count);
         }
 
-        private List<AvailableROGarmentReportViewModel> GetData(IEnumerable<CostCalculationGarment> CostCalculationGarments)
+        private List<LatestAvailableROGarmentReportViewModel> GetData(IEnumerable<CostCalculationGarment> CostCalculationGarments)
         {
-            var data = CostCalculationGarments.Select(cc => new AvailableROGarmentReportViewModel
+            var data = CostCalculationGarments.Select(cc => new LatestAvailableROGarmentReportViewModel
             {
                 ApprovedSampleDate = cc.ValidationMDDate.ToOffset(TimeSpan.FromHours(identityService.TimezoneOffset)).Date,
                 DeliveryDate = cc.DeliveryDate.ToOffset(TimeSpan.FromHours(identityService.TimezoneOffset)).Date,
