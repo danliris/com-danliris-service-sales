@@ -1,6 +1,6 @@
 ﻿using Com.Danliris.Service.Sales.Lib.PDFTemplates;
-using Com.Danliris.Service.Sales.Lib.ViewModels.FinishingPrinting;
-using Com.Danliris.Service.Sales.Lib.ViewModels.IntegrationViewModel;     
+using Com.Danliris.Service.Sales.Lib.ViewModels.Weaving;
+using Com.Danliris.Service.Sales.Lib.ViewModels.IntegrationViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,14 +9,13 @@ using Xunit;
 
 namespace Com.Danliris.Sales.Test.PDFTemplates
 {
-    public class NewFinishingPrintingSalesContractPdfTemplateTest
+    public class NewWeavingSalesContractPdfTemplateTest
     {
         [Fact]
         public void GeneratePdfTemplate_Return_Success()
-
         {
-            NewFinishingPrintingSalesContractPdfTemplate pdf = new NewFinishingPrintingSalesContractPdfTemplate();
-            FinishingPrintingSalesContractViewModel viewModel = new FinishingPrintingSalesContractViewModel()
+            NewWeavingSalesContractPdfTemplate pdf = new NewWeavingSalesContractPdfTemplate();
+            WeavingSalesContractViewModel viewModel = new WeavingSalesContractViewModel()
             {
                 SalesContractNo = "no",
                 Buyer = new BuyerViewModel()
@@ -71,7 +70,7 @@ namespace Com.Danliris.Sales.Test.PDFTemplates
                     Name = "name",
                     Remark = "remark",
                 },
-                Material = new ProductViewModel() //Material
+                Material = new MaterialViewModel() //Material
                 {
                     Code = "code",
                     Name = "name",
@@ -79,34 +78,34 @@ namespace Com.Danliris.Sales.Test.PDFTemplates
                     Tags = "tag"
                 },
                 Code = "code",
-                Commission = "comission",
-                Commodity = new CommodityViewModel()
+                Comission = "comission",
+                Comodity = new CommodityViewModel()
                 {
                     Id = 1,
                     Code = "code",
                     Name = "name",
                     Type = "type",
                 },
-                CommodityDescription = "description",
+                ComodityDescription = "description",
                 OrderQuantity = 1,
-                Amount = 1,
+                //amou = 1,
                 Packing = "packing",
                 TermOfShipment = "shipment",
                 TransportFee = "123",
                 DeliveredTo = "deliveredto",
                 DeliverySchedule = DateTimeOffset.Now,
-                OrderType = new OrderTypeViewModel()
-                {
-                    Id = 1,
-                    Code = "code",  
-                    Name = "name",
-                    Remark = "remark",
-                },
+                //OrderType = new OrderTypeViewModel()
+                //{
+                //    Id = 1,
+                //    Code = "code",
+                //    Name = "name",
+                //    Remark = "remark",
+                //},
                 DispositionNumber = "disposition",
-                MaterialWidth    = "width",
+                MaterialWidth = "width",
                 PieceLength = "Length",
-                PointLimit = 1,
-                PointSystem = 1,
+                //poin = 1,
+                //PointSystem = 1,
                 Quality = new QualityViewModel()
                 {
                     Id = 1,
@@ -123,13 +122,13 @@ namespace Com.Danliris.Sales.Test.PDFTemplates
                     IsExport = true,
                 },
                 FromStock = true,
-                UseIncomeTax = true,
+                //UseIncomeTax = true,
                 VatTax = new VatTaxViewModel()
                 {
                     Id = "id",
                     Rate = 1,
                 },
-                UOM = new UomViewModel()
+                Uom = new UomViewModel()
                 {
                     Id = 1,
                     Unit = "unit"
@@ -141,23 +140,23 @@ namespace Com.Danliris.Sales.Test.PDFTemplates
                     Name = "name",
                     Remark = "remark",
                 },
-                RemainingQuantity = 1,
-                DesignMotive = new OrderTypeViewModel()
-                {
-                    Id = 1,
-                    Code = "code",
-                    Name = "name",
-                    Remark = "remark",
-                },
+                //RemainingQuantity = 1,
+                //DesignMotive = new OrderTypeViewModel()
+                //{
+                //    Id = 1,
+                //    Code = "code",
+                //    Name = "name",
+                //    Remark = "remark",
+                //},
                 DownPayments = "DP",
                 PriceDP = 1,
                 PaymentMethods = "PaymentMethods",
                 Day = 1,
                 precentageDP = 1,
-        Details = new List<FinishingPrintingSalesContractDetailViewModel>()
-                
+                //Details = new List<FinishingPrintingSalesContractDetailViewModel>()
+
             };
-            var result = pdf.GeneratedPdfTemplate(viewModel, 2);
+            var result = pdf.GeneratePdfTemplate(viewModel, 2);
             Assert.NotNull(result);
             Assert.IsType<MemoryStream>(result);
         }
