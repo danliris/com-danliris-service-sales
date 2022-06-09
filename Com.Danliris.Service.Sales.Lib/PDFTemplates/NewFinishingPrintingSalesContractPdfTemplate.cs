@@ -191,15 +191,9 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
 
             //#region Produk diorder
             PdfPTable tableOrder = new PdfPTable(2);
-            tableOrder.TotalWidth = 300f;
-            tableOrder.LockedWidth = true;
-            float[] widths = new float[] { 5f, 5f };
-            tableOrder.SetWidths(widths);
-            tableOrder.HorizontalAlignment = 0;
-            tableOrder.SpacingBefore = 10f;
-            tableOrder.SpacingAfter = 30f;
+            tableOrder.WidthPercentage = 60;
+            tableOrder.SetWidths(new float[] { 1f, 1f });
             PdfPCell cellOrder = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_CENTER };
-            
             cellOrder.Phrase = new Phrase("Jenis Produk", bold_font);
             tableOrder.AddCell(cellOrder);
             cellOrder.Phrase = new Phrase("Material/Konstruksi", bold_font);
@@ -208,9 +202,10 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             tableOrder.AddCell(cellOrder);
             cellOrder.Phrase = new Phrase(viewModel.Material.Name + "" + "-" + " " + viewModel.MaterialConstruction.Name, normal_font);
             tableOrder.AddCell(cellOrder);
+
+
+            cellOrder.VerticalAlignment = Element.ALIGN_TOP;
             tableOrder.AddCell(cellOrder);
-
-
 
             PdfPCell cellProduct = new PdfPCell(tableOrder); // dont remove
             tableOrder.ExtendLastRow = false;
@@ -231,22 +226,15 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
 
             //#region Pemenuhan Order
             PdfPTable tableDetailOrder = new PdfPTable(2);
-            //tableDetailOrder.WidthPercentage = 20;
-            //tableDetailOrder.SetWidths(new float[] { 20f, 20f });
-            tableDetailOrder.TotalWidth = 216f;
-            tableDetailOrder.LockedWidth = true;
-            float[] widthsDetail = new float[] { 1f, 1f };
-            tableDetailOrder.SetWidths(widthsDetail);
-            tableDetailOrder.HorizontalAlignment = 0;
-            tableDetailOrder.SpacingBefore = 10f;
-            tableDetailOrder.SpacingAfter = 20f;
+            tableDetailOrder.WidthPercentage = 40;
+            tableDetailOrder.SetWidths(new float[] { 20f, 20f });
             PdfPCell cellDetailOrder = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_MIDDLE };
             PdfPCell CellDetailCenter = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_CENTER };
-            cellDetailOrder.Phrase = new Phrase("Jumlah", bold_font);
+            cellDetailOrder.Phrase = new Phrase("Jumlah", normal_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             CellDetailCenter.Phrase = new Phrase(viewModel.OrderQuantity.GetValueOrDefault().ToString() + " " + uom, normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
-            cellDetailOrder.Phrase = new Phrase("Harga", bold_font);
+            cellDetailOrder.Phrase = new Phrase("Harga", normal_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             int index = 0;
 
@@ -266,24 +254,24 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
                     tableDetailOrder.AddCell(CellDetailCenter);
                 }
             }
-            cellDetailOrder.Phrase = new Phrase("Total Harga", bold_font);
+            cellDetailOrder.Phrase = new Phrase("Total Harga", normal_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             //cellDetailOrder.Phrase = new Phrase(Convert.ToString(viewModel.Amount), normal_font);
             CellDetailCenter.Phrase = new Phrase(viewModel.Amount.GetValueOrDefault().ToString(), normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
-            cellDetailOrder.Phrase = new Phrase("Jenis Packing", bold_font);
+            cellDetailOrder.Phrase = new Phrase("Jenis Packing", normal_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             CellDetailCenter.Phrase = new Phrase(viewModel.Packing, normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
-            cellDetailOrder.Phrase = new Phrase("Jadwal Pengiriman", bold_font);
+            cellDetailOrder.Phrase = new Phrase("Jadwal Pengiriman", normal_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             CellDetailCenter.Phrase = new Phrase(viewModel.TermOfShipment, normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
-            cellDetailOrder.Phrase = new Phrase("Ongkos Angkut", bold_font);
+            cellDetailOrder.Phrase = new Phrase("Ongkos Angkut", normal_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             CellDetailCenter.Phrase = new Phrase(viewModel.TransportFee, normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
-            cellDetailOrder.Phrase = new Phrase("Alamat Pengiriman", bold_font);
+            cellDetailOrder.Phrase = new Phrase("Alamat Pengiriman", normal_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             CellDetailCenter.Phrase = new Phrase(viewModel.DeliveredTo, normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
@@ -312,7 +300,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             
             //PdfPTable tablePembayaran = new PdfPTable(4);
             PdfPTable tablePembayaran = new PdfPTable(3);
-            tablePembayaran.SetWidths(new float[] { 0.01f, 0.01f, 0.03f });
+            tablePembayaran.SetWidths(new float[] { 0.01f, 0.01f, 0.01f });
             PdfPCell bodyContentPembayaran = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
 
             bodyContentPembayaran.Phrase = new Phrase("1. Cara Pembayaran", normal_font);
@@ -335,46 +323,33 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             tablePembayaran.AddCell(bodyContentPembayaran);
             bodyContentPembayaran.Phrase = new Phrase(viewModel.AccountBank.AccountNumber, normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
-            //bodyContentPembayaran.Phrase = new Phrase("4. Pembayaran dianggap sah / lunas jika diterima penjual sesusai dengan nilai tagihan.", normal_font);
-            //tablePembayaran.AddCell(bodyContentPembayaran);
-            //bodyContentPembayaran.Phrase = new Phrase("", normal_font);
-            //tablePembayaran.AddCell(bodyContentPembayaran);
-            //bodyContentPembayaran.Phrase = new Phrase("", normal_font);
-            //tablePembayaran.AddCell(bodyContentPembayaran);
+            bodyContentPembayaran.Phrase = new Phrase("4.", normal_font);
+            tablePembayaran.AddCell(bodyContentPembayaran);
+            bodyContentPembayaran.Phrase = new Phrase("Pembayaran dianggap sah / lunas jika diterima penjual sesusai dengan nilai tagihan.", normal_font);
+            tablePembayaran.AddCell(bodyContentPembayaran);
+            bodyContentPembayaran.Phrase = new Phrase("", normal_font);
+            tablePembayaran.AddCell(bodyContentPembayaran);
             PdfPCell cellPembayaran = new PdfPCell(tablePembayaran); // dont remove
             tablePembayaran.ExtendLastRow = false;
-            tablePembayaran.SpacingAfter = 0.5f;
+            tablePembayaran.SpacingAfter = 20f;
             document.Add(tablePembayaran);
-            string ParagraphStringPembayaran = "4. Pembayaran dianggap sah / lunas jika diterima penjual sesusai dengan nilai tagihan.";
-            Paragraph ParagraphPembayaran = new Paragraph(ParagraphStringPembayaran, normal_font) { Alignment = Element.ALIGN_LEFT };
-            tablePembayaran.SpacingAfter = 30f;
-            document.Add(ParagraphPembayaran);
-
 
             #endregion
 
             #region Signatures
             PdfPTable tableSignature = new PdfPTable(2);
-            //tableSignature.WidthPercentage = 20;
-            //tableSignature.SetWidths(new int[] { 10, 10 });
-            tableSignature.TotalWidth = 216f;
-            tableSignature.LockedWidth = true;
-            float[] widthsSignature = new float[] { 1f, 1f };
-            tableSignature.SetWidths(widthsSignature);
-            tableSignature.HorizontalAlignment = 0;
-            tableSignature.SpacingBefore = 20f;
-            tableSignature.SpacingAfter = 20f;
-            tableSignature.HorizontalAlignment = Element.ALIGN_RIGHT;
-            PdfPCell cellSignature = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_CENTER };
-            PdfPCell cellBottomSignature = new PdfPCell() { MinimumHeight = 40, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_CENTER };
+            tableSignature.WidthPercentage = 40;
+            tableSignature.SetWidths(new float[] { 20f, 20f });
+            PdfPCell cellSignature = new PdfPCell() { MinimumHeight = 5, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT };
+
             cellSignature.Phrase = new Phrase("Paraf Penjual", normal_font);
             tableSignature.AddCell(cellSignature);
             cellSignature.Phrase = new Phrase("Paraf Pembeli", normal_font);
             tableSignature.AddCell(cellSignature);
-            cellBottomSignature.Phrase = new Phrase(" ");
-            tableSignature.AddCell(cellBottomSignature);
-            cellBottomSignature.Phrase = new Phrase(" ");
-            tableSignature.AddCell(cellBottomSignature);
+            cellSignature.Phrase = new Phrase(" ");
+            tableSignature.AddCell(cellSignature);
+            cellSignature.Phrase = new Phrase(" ");
+            tableSignature.AddCell(cellSignature);
             PdfPCell cellSignatures = new PdfPCell(tableSignature); // dont remove
             tableSignature.ExtendLastRow = false;
             tableSignature.SpacingAfter = 15f;
