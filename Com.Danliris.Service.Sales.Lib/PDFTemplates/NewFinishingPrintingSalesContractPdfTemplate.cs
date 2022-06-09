@@ -35,21 +35,17 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             //var amount = viewModel.Details.Price * viewModel.OrderQuantity;
 
             var uom = "";
-            var uom1 = "";
             //if (viewModel.Uom.Unit.ToLower() == "yds")
             if (viewModel.UOM.Unit.ToLower() == "yds")
             {
                 uom = "YARD";
-                uom1 = "YARDS";
             }
             else if (viewModel.UOM.Unit.ToLower() == "mtr")
             {
                 uom = "METER";
-                uom1 = "METERS";
             }
             else
             {
-                uom = viewModel.UOM.Unit;
                 uom = viewModel.UOM.Unit;
             }
 
@@ -73,11 +69,11 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
                 details.Add( nominal );
             }
 
-            //foreach (var i in viewModel.Details)
-            //{
-            //    var amount = string.Format("{0:n2", i.Price * viewModel.OrderQuantity);
-            //    details.Add(amount);
-            //}
+            foreach (var i in viewModel.Details)
+            {
+                var amount = string.Format("{0:n2", i.Price * viewModel.OrderQuantity);
+                details.Add(amount);
+            }
 
             #endregion
 
