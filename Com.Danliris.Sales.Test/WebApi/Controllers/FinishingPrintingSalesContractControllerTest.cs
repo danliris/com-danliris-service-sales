@@ -43,8 +43,7 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
                 Buyer = new Service.Sales.Lib.ViewModels.IntegrationViewModel.BuyerViewModel
                 {
                     Id = 1,
-                    Type = "Lokal",
-                    Job = "job"
+                    Type = "Lokal"
                 },
                 AccountBank = new Service.Sales.Lib.ViewModels.IntegrationViewModel.AccountBankViewModel
                 {
@@ -92,10 +91,6 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
                 OrderType = new Service.Sales.Lib.ViewModels.IntegrationViewModel.OrderTypeViewModel()
                 {
                     Name="SOLID"
-                },
-                ProductType = new Service.Sales.Lib.ViewModels.IntegrationViewModel.ProductTypeViewModel()
-                {
-                    Name="Printing"
                 }
                 
             };

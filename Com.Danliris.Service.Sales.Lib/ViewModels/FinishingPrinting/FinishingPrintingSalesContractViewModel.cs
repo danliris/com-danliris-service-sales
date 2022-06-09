@@ -9,7 +9,6 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.FinishingPrinting
 {
     public class FinishingPrintingSalesContractViewModel : BaseViewModel, IValidatableObject
     {
-        public DateTimeOffset Date { get; set; }
         public AccountBankViewModel AccountBank { get; set; }
         public double? Amount { get; set; }
         public AgentViewModel Agent { get; set; }
@@ -46,12 +45,6 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.FinishingPrinting
         public UomViewModel UOM { get; set; }
         public YarnMaterialViewModel YarnMaterial { get; set; }
         public double? RemainingQuantity { get; set; }
-        public ProductTypeViewModel ProductType { get; set; }
-        public string DownPayments { get; set; }
-        public double? PriceDP { get; set; }
-        public string PaymentMethods { get; set; }
-        public int Day { get; set; }
-        public double? precentageDP { get; set; }   
         public List<FinishingPrintingSalesContractDetailViewModel> Details { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
