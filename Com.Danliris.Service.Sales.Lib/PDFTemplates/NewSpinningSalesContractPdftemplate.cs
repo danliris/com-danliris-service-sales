@@ -423,6 +423,22 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             conditionKesepakatan.ExtendLastRow = false;
             conditionKesepakatan.SpacingAfter = 20f;
             document.Add(conditionKesepakatan);
+
+
+            //PdfPTable conditionListChild = new PdfPTable(2);
+            //conditionListChild.SetWidths(new float[] { 0.04f, 1f });
+            //cellIContentLeft.Phrase = new Phrase("1.1 ", normal_font);
+            //conditionKesepakatan.AddCell(cellIContentLeft);
+            //cellIContentLeft.Phrase = new Phrase("Order yang telah diterima penjual tidak dapat dibatalkan secara sepohak oleh pembeli ", normal_font);
+            //conditionKesepakatan.AddCell(cellIContentLeft);
+            //cellIContentLeft.Phrase = new Phrase("1.2 ", normal_font);
+            //conditionKesepakatan.AddCell(cellIContentLeft);
+            //cellIContentLeft.Phrase = new Phrase("Setiap perubahan ketentuan dalam kontrak penjualan (apabila diperlukan) dapat dilakukan berdasarkan kesepakatan bersama ", normal_font);
+            //conditionKesepakatan.AddCell(cellIContentLeft);
+            //PdfPCell conditionListChildData = new PdfPCell(conditionListChild); // dont remove
+            //conditionListChild.ExtendLastRow = false;
+            //conditionListChild.SpacingAfter = 1f;
+            //document.Add(conditionListChild);
             #endregion
 
             #region Signature
