@@ -120,7 +120,6 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
 
                     }
 
-                    /* Get ProductType */
                     var responseProductType = HttpClientService.GetAsync($@"{APIEndpoint.Core}{ProductTypeUri}/" + viewModel.ProductType.Id).Result.Content.ReadAsStringAsync();
                     Dictionary<string, object> resultProductType = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Result);
                     object jsonProductType;

@@ -1,6 +1,7 @@
 ﻿using Com.Danliris.Service.Sales.Lib.PDFTemplates;
 using Com.Danliris.Service.Sales.Lib.ViewModels.FinishingPrinting;
-using Com.Danliris.Service.Sales.Lib.ViewModels.IntegrationViewModel;     
+using Com.Danliris.Service.Sales.Lib.ViewModels.IntegrationViewModel;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -149,12 +150,7 @@ namespace Com.Danliris.Sales.Test.PDFTemplates
                     Name = "name",
                     Remark = "remark",
                 },
-                DownPayments = "DP",
-                PriceDP = 1,
-                PaymentMethods = "PaymentMethods",
-                Day = 1,
-                precentageDP = 1,
-        Details = new List<FinishingPrintingSalesContractDetailViewModel>()
+                Details = new List<FinishingPrintingSalesContractDetailViewModel>()
                 
             };
             var result = pdf.GeneratedPdfTemplate(viewModel, 2);

@@ -56,7 +56,7 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
                 {
                     string BuyerUri = "master/buyers";
                     string BankUri = "master/account-banks";
-                    string ProductTypeUri = "master/product-types";
+                    string ProductTypeUri = "master/product-orders";
                     //string CurrenciesUri = "master/currencies";
                     string Token = Request.Headers["Authorization"].First().Replace("Bearer ", "");
 
@@ -123,6 +123,14 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
                         Dictionary<string, object> productType = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonProductType.ToString());
                         viewModel.ProductType.Name = productType.TryGetValue("Name", out jsonProductType) ? (jsonProductType != null ? jsonProductType.ToString() : "") : "";
                     }
+                    //var responseProductType = HttpClientService.GetAsync($@"{APIEndpoint.Core}{ProductTypeUri}/" + viewModel.ProductType.Id).Result.Content.ReadAsStringAsync();
+                    //Dictionary<string, object> resultProductType = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Result);
+                    //object jsonProductType;
+                    //if (resultProductType.TryGetValue("data", out jsonProductType))
+                    //{
+                    //    Dictionary<string, object> productType = JsonConvert.DeserializeObject<Dictionary<string, object>>(json.ToString());
+                    //    viewModel.ProductType.Name = productType.TryGetValue("Name", out jsonProductType) ? (jsonProductType != null ? jsonProductType.ToString() : "") : "";
+                    //}
 
                     /* Get Currencies */
                     //var responseCurrencies = httpClient.GetAsync($@"{APIEndpoint.Core}{CurrenciesUri}/" + viewModel.AccountBank.Currency.Id).Result.Content.ReadAsStringAsync();
