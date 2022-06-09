@@ -127,10 +127,10 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.FinishingPrinting
                 yield return new ValidationResult("Kualitas harus diisi", new List<string> { "QualityID" });
             }
 
-            //if (TermOfPayment == null || TermOfPayment.Id.Equals(0))
-            //{
-            //    yield return new ValidationResult("Syarat Pembayaran harus diisi", new List<string> { "TermOfPaymentID" });
-            //}
+            if (TermOfPayment == null || TermOfPayment.Id.Equals(0))
+            {
+                yield return new ValidationResult("Syarat Pembayaran harus diisi", new List<string> { "TermOfPaymentID" });
+            }
 
             if (AccountBank == null || AccountBank.Id.Equals(0))
             {
