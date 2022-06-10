@@ -78,7 +78,9 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.DataUtils.Weaving
                 YarnMaterialCode = "c",
                 YarnMaterialId = 1,
                 YarnMaterialName = "n",
-                YarnMaterialRemark = "r"
+                YarnMaterialRemark = "r",
+                BuyerJob = "job",
+                ProductTypeName = "name"
             });
         }
     }

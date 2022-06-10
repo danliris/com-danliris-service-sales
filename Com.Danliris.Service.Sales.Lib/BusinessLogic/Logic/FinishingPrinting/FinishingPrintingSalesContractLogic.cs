@@ -74,7 +74,11 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.FinishingPrinting
                     YarnMaterialName = field.YarnMaterialName,
                     MaterialWidth = field.MaterialWidth,
                     LastModifiedUtc = field.LastModifiedUtc,
-                    Details = field.Details
+                    Details = field.Details,
+                    BuyerJob = field.BuyerJob,
+                    ProductTypeId = field.ProductTypeId,
+                    ProductTypeCode = field.ProductTypeCode,
+                    ProductTypeName = field.ProductTypeName,
                 });
 
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);

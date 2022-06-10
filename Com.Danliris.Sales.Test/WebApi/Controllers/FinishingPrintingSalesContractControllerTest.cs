@@ -91,8 +91,16 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
                 OrderType = new Service.Sales.Lib.ViewModels.IntegrationViewModel.OrderTypeViewModel()
                 {
                     Name="SOLID"
-                }
-                
+                },
+                ProductType = new Service.Sales.Lib.ViewModels.IntegrationViewModel.ProductTypeViewModel()
+                {
+                    Name = "Printing"
+                },
+                PaymentMethods = "payment",
+                DownPayments = "DP",
+                Day = 1,
+                PriceDP = 1,
+                precentageDP = 1,
             };
 
             mocks.Facade.Setup(x => x.ReadByIdAsync(It.IsAny<int>())).ReturnsAsync(Model);

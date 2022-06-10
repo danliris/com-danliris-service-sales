@@ -56,6 +56,13 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.Weaving
         public AccountBankViewModel AccountBank { get; set; }
         public AgentViewModel Agent { get; set; }
         public VatTaxViewModel VatTax { get; set; }
+        public ProductTypeViewModel ProductType { get; set;}
+        public MaterialViewModel Material { get; set; }
+        public string DownPayments { get; set; }
+        public double? PriceDP { get; set; }
+        public double? precentageDP { get; set; }
+        public string PaymentMethods { get; set; }
+        public int? Day { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -105,6 +112,8 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.Weaving
                 yield return new ValidationResult("harus lebih dari 0", new List<string> { "Price" });
             if (this.DeliverySchedule == null)
                 yield return new ValidationResult("harus di isi", new List<string> { "DeliverySchedule" });
+            //if (ProductType == null || ProductType.Id.Equals(0))
+            //    yield return new ValidationResult("Jenis Produk harus diisi", new List<string> { "ProductTypeId" });
         }
     }
 }

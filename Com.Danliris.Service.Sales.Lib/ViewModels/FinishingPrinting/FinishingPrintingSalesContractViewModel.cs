@@ -45,6 +45,12 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.FinishingPrinting
         public UomViewModel UOM { get; set; }
         public YarnMaterialViewModel YarnMaterial { get; set; }
         public double? RemainingQuantity { get; set; }
+        public ProductTypeViewModel ProductType { get; set; }
+        public string DownPayments { get; set; }
+        public double? PriceDP { get; set; }
+        public string PaymentMethods { get; set; }
+        public int Day { get; set; }
+        public double? precentageDP { get; set; }
         public List<FinishingPrintingSalesContractDetailViewModel> Details { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -120,10 +126,10 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.FinishingPrinting
                 yield return new ValidationResult("Kualitas harus diisi", new List<string> { "QualityID" });
             }
 
-            if (TermOfPayment == null || TermOfPayment.Id.Equals(0))
-            {
-                yield return new ValidationResult("Syarat Pembayaran harus diisi", new List<string> { "TermOfPaymentID" });
-            }
+            //if (TermOfPayment == null || TermOfPayment.Id.Equals(0))
+            //{
+            //    yield return new ValidationResult("Syarat Pembayaran harus diisi", new List<string> { "TermOfPaymentID" });
+            //}
 
             if (AccountBank == null || AccountBank.Id.Equals(0))
             {
