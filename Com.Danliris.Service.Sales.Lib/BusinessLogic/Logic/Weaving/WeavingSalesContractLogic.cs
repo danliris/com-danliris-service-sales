@@ -33,7 +33,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.Weaving
 
             List<string> SelectedFields = new List<string>()
             {
-                "Id", "SalesContractNo","Buyer","DeliverySchedule"
+                "Id", "SalesContractNo","Buyer","DeliverySchedule", "ProductType", "Material", "MaterialConstruction"
             };
 
             Query = Query
@@ -47,7 +47,19 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.Weaving
                     BuyerName = field.BuyerName,
                     BuyerType = field.BuyerType,
                     DeliverySchedule = field.DeliverySchedule,
-                    LastModifiedUtc = field.LastModifiedUtc
+                    LastModifiedUtc = field.LastModifiedUtc,
+                    BuyerJob = field.BuyerJob,
+                    ProductTypeId = field.ProductTypeId,
+                    ProductTypeCode = field.ProductTypeCode,
+                    ProductTypeName = field.ProductTypeName,
+                    MaterialCode = field.MaterialCode,
+                    MaterialID = field.MaterialID,
+                    MaterialName = field.MaterialName,
+                    MaterialPrice = field.MaterialPrice,
+                    MaterialTags = field.MaterialTags,
+                    MaterialConstructionCode = field.MaterialConstructionCode,
+                    MaterialConstructionId = field.MaterialConstructionId,
+                    MaterialConstructionName = field.MaterialConstructionName
                 });
 
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
