@@ -85,7 +85,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             tableBody.AddCell(bodyContentLeft);
             bodyContentLeft.Phrase = new Phrase("Nama", normal_font);
             tableBody.AddCell(bodyContentLeft);
-            bodyContentLeft.Phrase = new Phrase(": HENDRO SUSENO ", normal_font);
+            bodyContentLeft.Phrase = new Phrase(": Robby Oentoro ", normal_font);
             tableBody.AddCell(bodyContentLeft);
             bodyContentLeft.Phrase = new Phrase("", normal_font);
             tableBody.AddCell(bodyContentLeft);
@@ -168,8 +168,6 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             float[] widths = new float[] { 5f, 5f };
             tableOrder.SetWidths(widths);
             tableOrder.HorizontalAlignment = 0;
-            tableOrder.SpacingBefore = 10f;
-            tableOrder.SpacingAfter = 30f;
             PdfPCell cellOrder = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_CENTER };
 
             cellOrder.Phrase = new Phrase("Jenis Produk", bold_font);
@@ -187,7 +185,10 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             PdfPCell cellProduct = new PdfPCell(tableOrder); // dont remove
             tableOrder.ExtendLastRow = false;
             tableOrder.SpacingAfter = 10f;
-            document.Add(tableOrder);
+            Paragraph p = new Paragraph();
+            p.IndentationLeft = 15f;
+            p.Add(tableOrder);
+            document.Add(p);
 
             //cellOrder.VerticalAlignment = Element.ALIGN_TOP;
             //tableOrder.AddCell(cellOrder);
@@ -210,8 +211,6 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             float[] widthsDetail = new float[] { 1f, 1f };
             tableDetailOrder.SetWidths(widthsDetail);
             tableDetailOrder.HorizontalAlignment = 0;
-            tableDetailOrder.SpacingBefore = 10f;
-            tableDetailOrder.SpacingAfter = 20f;
             PdfPCell cellDetailOrder = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_MIDDLE };
             PdfPCell CellDetailCenter = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_CENTER };
             cellDetailOrder.Phrase = new Phrase("Jumlah", bold_font);
@@ -249,7 +248,10 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             PdfPCell cellDetail = new PdfPCell(tableDetailOrder); // dont remove
             tableDetailOrder.ExtendLastRow = false;
             tableDetailOrder.SpacingAfter = 10f;
-            document.Add(tableDetailOrder);
+            Paragraph p1 = new Paragraph();
+            p1.IndentationLeft = 15f;
+            p1.Add(tableDetailOrder);
+            document.Add(p1);
 
             cellDetailOrder.VerticalAlignment = Element.ALIGN_TOP;
             tableDetailOrder.AddCell(cellDetailOrder);
@@ -264,34 +266,43 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             Paragraph Paragraph5 = new Paragraph(ParagraphString5, bold_font) { Alignment = Element.ALIGN_LEFT };
             document.Add(Paragraph5);
 
-
-            //PdfPTable tablePembayaran = new PdfPTable(4);
-            PdfPTable tablePembayaran = new PdfPTable(3);
-            tablePembayaran.SetWidths(new float[] { 0.01f, 0.01f, 0.03f });
+            Paragraph p2 = new Paragraph();
+            PdfPTable tablePembayaran = new PdfPTable(4);
+            tablePembayaran.SetWidths(new float[] { 0.3f, 3f, 0.2f, 5f });
             PdfPCell bodyContentPembayaran = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
 
-            bodyContentPembayaran.Phrase = new Phrase("1. Cara Pembayaran", normal_font);
+            bodyContentPembayaran.Phrase = new Phrase("1.", normal_font);
+            tablePembayaran.AddCell(bodyContentPembayaran);
+            bodyContentPembayaran.Phrase = new Phrase("Cara Pembayaran", normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
             bodyContentPembayaran.Phrase = new Phrase(":", normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
             bodyContentPembayaran.Phrase = new Phrase(viewModel.PaymentMethods, normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
 
-            bodyContentPembayaran.Phrase = new Phrase("2. Down Payment (DP)", normal_font);
+            bodyContentPembayaran.Phrase = new Phrase("2.", normal_font);
+            tablePembayaran.AddCell(bodyContentPembayaran);
+            bodyContentPembayaran.Phrase = new Phrase("Down Payment (DP)", normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
             bodyContentPembayaran.Phrase = new Phrase(":", normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
             bodyContentPembayaran.Phrase = new Phrase(viewModel.DownPayments, normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
 
-            bodyContentPembayaran.Phrase = new Phrase("3. Rekening Tujuan Pembayaran", normal_font);
+            bodyContentPembayaran.Phrase = new Phrase("3.", normal_font);
+            tablePembayaran.AddCell(bodyContentPembayaran);
+            bodyContentPembayaran.Phrase = new Phrase("Rekening Tujuan Pembayaran", normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
             bodyContentPembayaran.Phrase = new Phrase(":", normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
-            bodyContentPembayaran.Phrase = new Phrase(viewModel.AccountBank.AccountNumber, normal_font);
+            bodyContentPembayaran.Phrase = new Phrase(viewModel.AccountBank.BankName + " - " + viewModel.AccountBank.AccountNumber, normal_font);
             tablePembayaran.AddCell(bodyContentPembayaran);
-            //bodyContentPembayaran.Phrase = new Phrase("4. Pembayaran dianggap sah / lunas jika diterima penjual sesusai dengan nilai tagihan.", normal_font);
-            //tablePembayaran.AddCell(bodyContentPembayaran);
+
+            bodyContentPembayaran.Phrase = new Phrase("4.", normal_font);
+            tablePembayaran.AddCell(bodyContentPembayaran);
+            bodyContentPembayaran.Phrase = new Phrase("Pembayaran dianggap sah / lunas jika diterima penjual sesusai dengan nilai tagihan.", normal_font);
+            bodyContentPembayaran.Colspan = 3;
+            tablePembayaran.AddCell(bodyContentPembayaran);
             //bodyContentPembayaran.Phrase = new Phrase("", normal_font);
             //tablePembayaran.AddCell(bodyContentPembayaran);
             //bodyContentPembayaran.Phrase = new Phrase("", normal_font);
@@ -299,11 +310,9 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             PdfPCell cellPembayaran = new PdfPCell(tablePembayaran); // dont remove
             tablePembayaran.ExtendLastRow = false;
             tablePembayaran.SpacingAfter = 0.5f;
-            document.Add(tablePembayaran);
-            string ParagraphStringPembayaran = "4. Pembayaran dianggap sah / lunas jika diterima penjual sesusai dengan nilai tagihan.";
-            Paragraph ParagraphPembayaran = new Paragraph(ParagraphStringPembayaran, normal_font) { Alignment = Element.ALIGN_LEFT };
-            tablePembayaran.SpacingAfter = 30f;
-            document.Add(ParagraphPembayaran);
+            p2.IndentationLeft = 15f;
+            p2.Add(tablePembayaran);
+            document.Add(p2);
 
 
             #endregion
@@ -344,91 +353,94 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             ConditionName.SpacingAfter = 1f;
             document.Add(ConditionName);
 
-            //PdfPTable conditionList = new PdfPTable(2);
-            //conditionList.SetWidths(new float[] { 0.01f, 1f });
-            string DashListSymbol = "\u00AF";
-            PdfPCell cellIContentLeft = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
-            PdfPCell bodyContentJustify = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_JUSTIFIED };
-            PdfPCell cellIContentRight = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT };
+            List list = new List(List.ORDERED);
+            list.IndentationLeft = 15f;
+            list.Add(new ListItem("Kesepakatan", bold_font));
 
-            PdfPTable conditionKesepakatan = new PdfPTable(2);
-            conditionKesepakatan.SetWidths(new float[] { 0.04f, 1f });
+            List sublist1 = new List(List.ORDERED);
+            sublist1.IndentationLeft = 10f;
+            sublist1.PreSymbol = string.Format("{0}.", 1);
+            ListItem one = new ListItem("Order yang telah diterima penjual tidak dapat dibatalkan secara sepihak oleh pembeli", normal_font);
+            one.Alignment = Element.ALIGN_JUSTIFIED;
+            one.Leading = 13;
+            sublist1.Add(one);
+            one = new ListItem("Setiap perubahan ketentuan dalam kontrak penjualan (apabila diperlukan) dapat dilakukan berdasarkan kesepakatan bersama", normal_font);
+            one.Alignment = Element.ALIGN_JUSTIFIED;
+            one.Leading = 13;
+            sublist1.Add(one);
+            list.Add(sublist1);
 
-            bodyContentJustify.SetLeading(1.5f, 1);
-            cellIContentLeft.Phrase = new Phrase("1. ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("Kesepakatan ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentRight.Phrase = new Phrase("1.1 ", normal_font);
-            conditionKesepakatan.AddCell(cellIContentRight);
-            bodyContentJustify.Phrase = new Phrase("Order yang telah diterima penjual tidak dapat dibatalkan secara sepohak oleh pembeli ", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentLeft.Phrase = new Phrase("1.2 ", normal_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Setiap perubahan ketentuan dalam kontrak penjualan (apabila diperlukan) dapat dilakukan berdasarkan kesepakatan bersama ", normal_font);
+            list.Add(new ListItem("Keterlambatan Pembayaran Denda", bold_font));
 
+            List sublist2 = new List(List.ORDERED);
+            sublist2.IndentationLeft = 10f;
+            sublist2.PreSymbol = string.Format("{0}.", 2);
+            ListItem two = new ListItem("Bilamana terjadi keterlambatan pembayaran berdasarkan ketentuan pada huruf C angka 1, maka pembeli dikenakan denda sebesar.... % per bulan yang dihutang secara proporsi untuk keterlambatan per hari dari nominal yang belum dibayarkan, denda sekaligus pembayaran terutang tersebut harus dibayar secara tunai dan sekaligus lunas oleh pembeli", normal_font);
+            two.Alignment = Element.ALIGN_JUSTIFIED;
+            two.Leading = 13;
+            sublist2.Add(two);
+            two = new ListItem("Dalam hal Pembeli tidak dapat melakukan pembayaran beserta dendanya sampai dengan batas waktu yang ditentukan oleh penjual, maka tanpa mengesampingkan denda, Penjual dapat mengambil langkah sebagai berikut : ", normal_font);
+            two.Alignment = Element.ALIGN_JUSTIFIED;
+            two.Leading = 13;
+            sublist2.Add(two);
 
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentLeft.Phrase = new Phrase("2. ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("Keterlambatan Pembayaran dan Denda ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("2.1 ", normal_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Bilamana terjadi keterlambatan pembayaran berdasarkan ketentuan pada huruf C angka 1, maka pembeli dikenakan denda sebesar .... % per bulan yang dihutang secara proporsi untuk keterlambatan per hari dari nominal yang belum dibayarkan, denda sekaligus pembayaran terutang tersebut harus dibayar secara tunai dan sekaligus lunas oleh pembeli", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentLeft.Phrase = new Phrase("2.2 ", normal_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Dalam hal Pembeli tidak dapat melakukan pembayaran beserta dendanya sampai dengan batas waktu yang ditentukan oleh penjual, maka tanpa mengesampingkan denda, Penjual dapat mengambil langkah sebagai berikut : ", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentRight.Phrase = new Phrase(DashListSymbol, normal_font1);
-            conditionKesepakatan.AddCell(cellIContentRight);
-            bodyContentJustify.Phrase = new Phrase("Meminta Pembeli mengembalikan Produk yang belum dibayar dalam kondisi utuh dan lengkap, dalam hal ini Pembeli berkewajiban mengembalikan Produk sesuai permintaan Penjual dengan biaya ditanggung oleh Pembeli.", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentRight.Phrase = new Phrase(DashListSymbol, normal_font1);
-            conditionKesepakatan.AddCell(cellIContentRight);
-            bodyContentJustify.Phrase = new Phrase("Jika Pembeli tidak mengembalikan Produk dalam waktu ..... hari setelah diminta oleh Penjual, maka Pembeli memberikan kuasa mutrlak dan tidak dapat dicabut kepada Penjual untuk mengambil kembali Produk yang belum dibayar oleh Pembeli dalam kondisi utuh dan lengkap seperti waktu pengiriman dari Penjual, segala biaya yang timbul dalam proses tersebut ditanggung Pembeli.", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentRight.Phrase = new Phrase(DashListSymbol, normal_font1);
-            conditionKesepakatan.AddCell(cellIContentRight);
-            bodyContentJustify.Phrase = new Phrase("Jika Produk sudah tidak ada karena sebab apapun maka Pembeli wajib mengganti dengan sejumlah uang senilai harga Produk.", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentLeft.Phrase = new Phrase("3. ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("Klaim ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("3.1 ", normal_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Jika Produk yang diterima Pembeli tidak seuai dengan kesepakatan, maka Pembeli wajib memberitahukan kepada Penjual, berikut dengan bukti yang cukup selambat-lambatnya ......(......) hari setelah Produk diterima, selanjutnya klaim akan diselesaikan secara terpidah dan tidak dapat dihubungkan dan / atau diperhitungkan dengan pembayaran Produk dalam kontak Penjualan ini.", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentLeft.Phrase = new Phrase("3.2 ", normal_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Bilamana dalam jangka waktu tersebut diatas Pembeli tidak mengajukan klaim maka Produk dinyatakan sudah sesuai denan Kontrak Penjualan.", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentLeft.Phrase = new Phrase("4. ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("Force Majeure", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Dalam hal terjadinya Force Majeure termasuk hal-hal berikut tetapi tidak terbatas pada bencana alam, kebakaran, pemogokan pekerjaan, hambatan lalu lintas, tindakan pemerintah dalam bidang ekonomi dan moneter yang ecara nyata berpengaruh terhadap pelaksanaan Kontrak Penjualan ini maupun hal-hal lain di luar kemampuan Penjual, maka Penjual tidak akan bertanggungjawab atas kegagalan penyerahan atau penyerahan yang tertunda, selanjutnya Penjual dan Pembeli sepakat untuk melakukan peninjauan kembali isi Kontrak Penjualan ini.", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            cellIContentLeft.Phrase = new Phrase("5. ", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("Perselisihan", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            cellIContentLeft.Phrase = new Phrase("", bold_font);
-            conditionKesepakatan.AddCell(cellIContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Semua hal yang menyangkut adanya sengketa atau perselisihan semaksimal mungkin diselesaikan secara musyawarah. Jika tidak dapat tercapai mufakat maka Penjual dan Pembeli sepakat memilih domisili hukum yang umum dan tetap di Kantor Panitera Pengadilan Negeri Sukoharjo.", normal_font);
-            conditionKesepakatan.AddCell(bodyContentJustify);
-            PdfPCell conditionListData = new PdfPCell(conditionKesepakatan); // dont remove
-            conditionKesepakatan.ExtendLastRow = false;
-            conditionKesepakatan.SpacingAfter = 20f;
-            document.Add(conditionKesepakatan);
+            List bulletedlist = new List(List.UNORDERED, 10f);
+            bulletedlist.IndentationLeft = 20f;
+            two = new ListItem("Meminta Pembeli mengembalikan Produk yang belum dibayar dalam kondisi utuh dan lengkap, dalam hal ini Pembeli berkewajiban mengembalikan Produk sesuai permintaan Penjual dengan biaya ditanggung oleh Pembeli.", normal_font);
+            two.Alignment = Element.ALIGN_JUSTIFIED;
+            two.Leading = 13;
+            bulletedlist.Add(two);
+            two = new ListItem("Jika Pembeli tidak mengembalikan Produk dalam waktu ..... hari setelah diminta oleh Penjual, maka Pembeli memberikan kuasa mutrlak dan tidak dapat dicabut kepada Penjual untuk mengambil kembali Produk yang belum dibayar oleh Pembeli dalam kondisi utuh dan lengkap seperti waktu pengiriman dari Penjual, segala biaya yang timbul dalam proses tersebut ditanggung Pembeli.", normal_font);
+            two.Alignment = Element.ALIGN_JUSTIFIED;
+            two.Leading = 13;
+            bulletedlist.Add(two);
+            two = new ListItem("Jika Produk sudah tidak ada karena sebab apapun maka Pembeli wajib mengganti dengan sejumlah uang senilai harga Produk.", normal_font);
+            two.Alignment = Element.ALIGN_JUSTIFIED;
+            two.Leading = 13;
+            bulletedlist.Add(two);
+            sublist2.Add(bulletedlist);
+            list.Add(sublist2);
+
+            list.Add(new ListItem("Klaim", bold_font));
+            List sublist3 = new List(List.ORDERED);
+            sublist3.IndentationLeft = 10f;
+            sublist3.PreSymbol = string.Format("{0}.", 3);
+            ListItem three = new ListItem("Jika Produk yang diterima Pembeli tidak seuai dengan kesepakatan, maka Pembeli wajib memberitahukan kepada Penjual, berikut dengan bukti yang cukup selambat-lambatnya ......(......) hari setelah Produk diterima, selanjutnya klaim akan diselesaikan secara terpidah dan tidak dapat dihubungkan dan / atau diperhitungkan dengan pembayaran Produk dalam kontak Penjualan ini.", normal_font);
+            three.Alignment = Element.ALIGN_JUSTIFIED;
+            three.Leading = 13;
+            sublist3.Add(three);
+            three = new ListItem("Bilamana dalam jangka waktu tersebut diatas Pembeli tidak mengajukan klaim maka Produk dinyatakan sudah sesuai denan Kontrak Penjualan.", normal_font);
+            three.Alignment = Element.ALIGN_JUSTIFIED;
+            three.Leading = 13;
+            sublist3.Add(three);
+            list.Add(sublist3);
+
+            list.Add(new ListItem("Force Majeure", bold_font));
+            List sublist4 = new List(List.UNORDERED);
+            sublist4.IndentationLeft = 10f;
+            sublist4.ListSymbol = new Chunk("");
+            ListItem four = new ListItem("Dalam hal terjadinya Force Majeure termasuk hal-hal berikut tetapi tidak terbatas pada bencana alam, kebakaran, pemogokan pekerjaan, hambatan lalu lintas, tindakan pemerintah dalam bidang ekonomi dan moneter yang ecara nyata berpengaruh terhadap pelaksanaan Kontrak Penjualan ini maupun hal-hal lain di luar kemampuan Penjual, maka Penjual tidak akan bertanggungjawab atas kegagalan penyerahan atau penyerahan yang tertunda, selanjutnya Penjual dan Pembeli sepakat untuk melakukan peninjauan kembali isi Kontrak Penjualan ini.", normal_font);
+            four.Alignment = Element.ALIGN_JUSTIFIED;
+            four.Leading = 13;
+            sublist4.Add(four);
+            list.Add(sublist4);
+
+            list.Add(new ListItem("Perselisihan", bold_font));
+            List sublist5 = new List(List.UNORDERED);
+            sublist5.IndentationLeft = 10f;
+            sublist5.ListSymbol = new Chunk("");
+            ListItem five = new ListItem("Semua hal yang menyangkut adanya sengketa atau perselisihan semaksimal mungkin diselesaikan secara musyawarah. Jika tidak dapat tercapai mufakat maka Penjual dan Pembeli sepakat memilih domisili hukum yang umum dan tetap di Kantor Panitera Pengadilan Negeri Sukoharjo.", normal_font);
+            five.Alignment = Element.ALIGN_JUSTIFIED;
+            five.Leading = 13;
+            sublist5.Add(five);
+            list.Add(sublist5);
+
+            document.Add(list);
             #endregion
 
             #region Signature
             PdfPTable signature = new PdfPTable(2);
+            signature.SpacingBefore = 10f;
             signature.SetWidths(new float[] { 1f, 1f });
             PdfPCell cellIContentRights = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_RIGHT };
             PdfPCell cellIContentLefts = new PdfPCell() { Border = Rectangle.NO_BORDER, HorizontalAlignment = Element.ALIGN_LEFT };
@@ -449,7 +461,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             signature.AddCell(cell_signature);
 
             string signatureArea = string.Empty;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 signatureArea += Environment.NewLine;
             }
@@ -466,7 +478,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             cell_signature.Phrase = new Phrase(" ", normal_font);
             signature.AddCell(cell_signature);
 
-            cell_signature.Phrase = new Phrase("( HENDRO SUSENO )", normal_font);
+            cell_signature.Phrase = new Phrase("( Robby Oentoro )", normal_font);
             signature.AddCell(cell_signature);
             cell_signature.Phrase = new Phrase("(" + viewModel.Buyer.Name + ")", normal_font);
             signature.AddCell(cell_signature);
