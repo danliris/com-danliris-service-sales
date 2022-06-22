@@ -223,12 +223,12 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             tableDetailOrder.AddCell(CellDetailCenter);
             cellDetailOrder.Phrase = new Phrase("Harga", bold_font);
             tableDetailOrder.AddCell(cellDetailOrder);
-            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n2}", viewModel.Price) + NumberToTextEN.toWords(viewModel.Price), normal_font);
+            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n2}", viewModel.Price), normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
             cellDetailOrder.Phrase = new Phrase("Total Harga", bold_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             //cellDetailOrder.Phrase = new Phrase(Convert.ToString(viewModel.Amount), normal_font);
-            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n2}", amount)  + AmountToText , normal_font);
+            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n2}", amount), normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
             cellDetailOrder.Phrase = new Phrase("Jenis Packing", bold_font);
             tableDetailOrder.AddCell(cellDetailOrder);
