@@ -130,5 +130,8 @@ namespace Com.Danliris.Service.Sales.Lib.Models.Spinning
         public double precentageDP { get; set; }
         public string PaymentMethods { get; set; }
         public int Day { get; set; }
+        public int LatePayment { get; set; }
+        public int LateReturn { get; set; }
+        public double? Claim { get; set; }
     }
 }

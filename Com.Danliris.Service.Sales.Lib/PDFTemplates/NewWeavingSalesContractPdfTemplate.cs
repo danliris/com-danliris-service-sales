@@ -34,6 +34,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             string QuantityToText = NumberToTextIDN.terbilang(viewModel.OrderQuantity);
             var amount = viewModel.Price * viewModel.OrderQuantity;
             string AmountToText = NumberToTextEN.toWords(amount);
+            string tanggalClaimTerbilang = NumberToTextIDN.terbilang(viewModel.Claim.GetValueOrDefault());
 
             var uom = "";
             var uom1 = "";
@@ -219,16 +220,16 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             PdfPCell CellDetailCenter = new PdfPCell() { MinimumHeight = 10, Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER, HorizontalAlignment = Element.ALIGN_CENTER };
             cellDetailOrder.Phrase = new Phrase("Jumlah", bold_font);
             tableDetailOrder.AddCell(cellDetailOrder);
-            CellDetailCenter.Phrase = new Phrase(viewModel.OrderQuantity.ToString("N2") + " (" + QuantityToText + ") " + uom, normal_font);
+            CellDetailCenter.Phrase = new Phrase(viewModel.OrderQuantity.ToString("n0") + " (" + QuantityToText + ") " + uom, normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
             cellDetailOrder.Phrase = new Phrase("Harga", bold_font);
             tableDetailOrder.AddCell(cellDetailOrder);
-            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n2}", viewModel.Price), normal_font);
+            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n0}", viewModel.Price), normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
             cellDetailOrder.Phrase = new Phrase("Total Harga", bold_font);
             tableDetailOrder.AddCell(cellDetailOrder);
             //cellDetailOrder.Phrase = new Phrase(Convert.ToString(viewModel.Amount), normal_font);
-            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n2}", amount), normal_font);
+            CellDetailCenter.Phrase = new Phrase(string.Format("{0:n0}", amount), normal_font);
             tableDetailOrder.AddCell(CellDetailCenter);
             cellDetailOrder.Phrase = new Phrase("Jenis Packing", bold_font);
             tableDetailOrder.AddCell(cellDetailOrder);
@@ -372,7 +373,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             List sublist2 = new List(List.ORDERED);
             sublist2.IndentationLeft = 10f;
             sublist2.PreSymbol = string.Format("{0}.", 2);
-            ListItem two = new ListItem("Bilamana terjadi keterlambatan pembayaran berdasarkan ketentuan pada huruf C angka 1, maka pembeli dikenakan denda sebesar.... % per bulan yang dihutang secara proporsi untuk keterlambatan per hari dari nominal yang belum dibayarkan, denda sekaligus pembayaran terutang tersebut harus dibayar secara tunai dan sekaligus lunas oleh pembeli", normal_font);
+            ListItem two = new ListItem("Bilamana terjadi keterlambatan pembayaran berdasarkan ketentuan pada huruf C angka 1, maka pembeli dikenakan denda sebesar " + viewModel.LatePayment + " % per bulan yang dihutang secara proporsi untuk keterlambatan per hari dari nominal yang belum dibayarkan, denda sekaligus pembayaran terutang tersebut harus dibayar secara tunai dan sekaligus lunas oleh pembeli", normal_font);
             two.Alignment = Element.ALIGN_JUSTIFIED;
             two.Leading = 13;
             sublist2.Add(two);
@@ -387,7 +388,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             two.Alignment = Element.ALIGN_JUSTIFIED;
             two.Leading = 13;
             bulletedlist.Add(two);
-            two = new ListItem("Jika Pembeli tidak mengembalikan Produk dalam waktu ..... hari setelah diminta oleh Penjual, maka Pembeli memberikan kuasa mutrlak dan tidak dapat dicabut kepada Penjual untuk mengambil kembali Produk yang belum dibayar oleh Pembeli dalam kondisi utuh dan lengkap seperti waktu pengiriman dari Penjual, segala biaya yang timbul dalam proses tersebut ditanggung Pembeli.", normal_font);
+            two = new ListItem("Jika Pembeli tidak mengembalikan Produk dalam waktu " + viewModel.LateReturn + " hari setelah diminta oleh Penjual, maka Pembeli memberikan kuasa mutrlak dan tidak dapat dicabut kepada Penjual untuk mengambil kembali Produk yang belum dibayar oleh Pembeli dalam kondisi utuh dan lengkap seperti waktu pengiriman dari Penjual, segala biaya yang timbul dalam proses tersebut ditanggung Pembeli.", normal_font);
             two.Alignment = Element.ALIGN_JUSTIFIED;
             two.Leading = 13;
             bulletedlist.Add(two);
@@ -402,7 +403,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             List sublist3 = new List(List.ORDERED);
             sublist3.IndentationLeft = 10f;
             sublist3.PreSymbol = string.Format("{0}.", 3);
-            ListItem three = new ListItem("Jika Produk yang diterima Pembeli tidak seuai dengan kesepakatan, maka Pembeli wajib memberitahukan kepada Penjual, berikut dengan bukti yang cukup selambat-lambatnya ......(......) hari setelah Produk diterima, selanjutnya klaim akan diselesaikan secara terpidah dan tidak dapat dihubungkan dan / atau diperhitungkan dengan pembayaran Produk dalam kontak Penjualan ini.", normal_font);
+            ListItem three = new ListItem("Jika Produk yang diterima Pembeli tidak seuai dengan kesepakatan, maka Pembeli wajib memberitahukan kepada Penjual, berikut dengan bukti yang cukup selambat-lambatnya " + viewModel.Claim + "(" + tanggalClaimTerbilang + ") hari setelah Produk diterima, selanjutnya klaim akan diselesaikan secara terpidah dan tidak dapat dihubungkan dan / atau diperhitungkan dengan pembayaran Produk dalam kontak Penjualan ini.", normal_font);
             three.Alignment = Element.ALIGN_JUSTIFIED;
             three.Leading = 13;
             sublist3.Add(three);
