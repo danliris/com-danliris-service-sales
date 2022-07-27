@@ -27,7 +27,9 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.DataUtils.SpinningSalesContractD
                 QualityName = "a",
                 AccountBankName = "name",
                 AccountBankNumber = "nm",
-                BuyerType = "type"
+                BuyerType = "type",
+                BuyerJob = "job",
+                ProductTypeName = "name"
             });
 
         }

@@ -121,16 +121,13 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
                     }
 
                     /* Get Product Type */
-                    if (viewModel.ProductType != null)
+                    var responseProductType = HttpClientService.GetAsync($@"{APIEndpoint.Core}{ProductTypeUri}/" + viewModel.ProductType.Id).Result.Content.ReadAsStringAsync();
+                    Dictionary<string, object> resultProductType = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Result);
+                    object jsonProductType;
+                    if (resultProductType.TryGetValue("data", out jsonProductType))
                     {
-                        var responseProductType = HttpClientService.GetAsync($@"{APIEndpoint.Core}{ProductTypeUri}/" + viewModel.ProductType.Id).Result.Content.ReadAsStringAsync();
-                        Dictionary<string, object> resultProductType = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Result);
-                        object jsonProductType;
-                        if (resultProductType.TryGetValue("data", out jsonProductType))
-                        {
-                            Dictionary<string, object> productType = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonProductType.ToString());
-                            viewModel.ProductType.Name = productType.TryGetValue("Name", out jsonProductType) ? (jsonProductType != null ? jsonProductType.ToString() : "") : "";
-                        }
+                        Dictionary<string, object> productType = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonProductType.ToString());
+                        viewModel.ProductType.Name = productType.TryGetValue("Name", out jsonProductType) ? (jsonProductType != null ? jsonProductType.ToString() : "") : "";
                     }
 
                     /* Get Currencies */
