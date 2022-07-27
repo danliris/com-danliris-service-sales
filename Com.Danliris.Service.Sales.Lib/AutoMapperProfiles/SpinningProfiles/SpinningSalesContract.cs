@@ -57,9 +57,6 @@ namespace Com.Danliris.Service.Sales.Lib.AutoMapperProfiles.SpinningProfiles
                 .ForPath(d => d.MaterialConstruction.Id, opt => opt.MapFrom(s => s.MaterialConstructionId))
                 .ForPath(d => d.MaterialConstruction.Code, opt => opt.MapFrom(s => s.MaterialConstructionCode))
                 .ForPath(d => d.MaterialConstruction.Name, opt => opt.MapFrom(s => s.MaterialConstructionName))
-
-                
-                
                 .ReverseMap();
         }
     }
