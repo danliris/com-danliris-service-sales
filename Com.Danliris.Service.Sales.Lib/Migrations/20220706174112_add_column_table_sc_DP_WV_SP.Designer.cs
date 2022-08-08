@@ -4,14 +4,16 @@ using Com.Danliris.Service.Sales.Lib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Com.Danliris.Service.Sales.Lib.Migrations
 {
     [DbContext(typeof(SalesDbContext))]
-    partial class SalesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220706174112_add_column_table_sc_DP_WV_SP")]
+    partial class add_column_table_sc_DP_WV_SP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,12 +190,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                     b.Property<double>("AccessoriesAllowance");
 
                     b.Property<bool>("Active");
-
-                    b.Property<string>("ApprovalCC")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("ApprovalRO")
-                        .HasMaxLength(255);
 
                     b.Property<string>("ApprovedIEBy")
                         .HasMaxLength(50);

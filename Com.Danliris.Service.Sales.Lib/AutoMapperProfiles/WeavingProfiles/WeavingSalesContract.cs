@@ -84,7 +84,6 @@ namespace Com.Danliris.Service.Sales.Lib.AutoMapperProfiles.WeavingProfiles
                 .ForPath(d => d.Material.Name, opt => opt.MapFrom(s => s.MaterialName))
 
                 
-
                 .ReverseMap();
         }
     }
