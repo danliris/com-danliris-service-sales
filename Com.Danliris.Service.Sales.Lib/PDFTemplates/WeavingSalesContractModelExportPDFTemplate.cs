@@ -16,10 +16,10 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
         public MemoryStream GeneratePdfTemplate(WeavingSalesContractViewModel viewModel, int timeoffset)
         {
             Font header_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 18);
-            Font normal_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
-            Font bold_font = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
+            Font normal_font = FontFactory.GetFont(BaseFont.HELVETICA, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 8);
+            Font bold_font = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 8);
 
-            Document document = new Document(PageSize.A4, 40, 40, 140, 40);
+            Document document = new Document(PageSize.A4, 40, 40, 130, 10);
             MemoryStream stream = new MemoryStream();
             PdfWriter writer = PdfWriter.GetInstance(document, stream);
             document.Open();
@@ -316,7 +316,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
 
 
             #region ConditionPage
-            document.NewPage();
+            //document.NewPage();
             
             string ConditionString = "Remark";
             Paragraph ConditionName = new Paragraph(ConditionString, header_font) { Alignment = Element.ALIGN_LEFT };
@@ -338,8 +338,12 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             conditionList.AddCell(bodyContentJustify);
             cellIdentityContentLeft.Phrase = new Phrase(bulletListSymbol, normal_font);
             conditionList.AddCell(cellIdentityContentLeft);
-            bodyContentJustify.Phrase = new Phrase("Benefciary :  P.T. DAN LIRIS KELURAHAN BANARAN, KECAMATAN GROGOL SUKOHARJO - INDONESIA  (Phone No. 0271 - 740888 / 714400). ", normal_font);
+            bodyContentJustify.Phrase = new Phrase("Benefciary :  P.T. DAN LIRIS JALAN MERAPI NO.23, BANARAN, GROGOL, SUKOHARJO, 57552, CENTRAL JAVA, INDONESIA ", normal_font);
             conditionList.AddCell(bodyContentJustify);
+            cellIdentityContentLeft.Phrase = new Phrase(" ", normal_font);
+            conditionList.AddCell(cellIdentityContentLeft);
+            cellIdentityContentLeft.Phrase = new Phrase("(Phone No. 0271 - 740888 / 714400). ", normal_font);
+            conditionList.AddCell(cellIdentityContentLeft);
             cellIdentityContentLeft.Phrase = new Phrase(" ", normal_font);
             conditionList.AddCell(cellIdentityContentLeft);
             cellIdentityContentLeft.Phrase = new Phrase("Payment Transferred to: ", normal_font);
@@ -374,6 +378,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             conditionList.AddCell(bodyContentJustify);
             PdfPCell conditionListData = new PdfPCell(conditionList); // dont remove
             conditionList.ExtendLastRow = false;
+            conditionList.SpacingAfter = 10f;
             document.Add(conditionList);
             #endregion
 
