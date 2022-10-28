@@ -114,7 +114,20 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
                 {
                     Name = "a"
                 },
-                ComodityDescription = "a"
+                ComodityDescription = "a",
+                Material = new Service.Sales.Lib.ViewModels.IntegrationViewModel.MaterialViewModel()
+                {
+                    Name = "a"
+                },
+                ProductType = new Service.Sales.Lib.ViewModels.IntegrationViewModel.ProductTypeViewModel()
+                {
+                    Name = "a"
+                },
+                PaymentMethods = "payment",
+                DownPayments = "DP",
+                Day = 1,
+                PriceDP = 1,
+                precentageDP = 1,
             };
 
             mocks.Facade.Setup(x => x.ReadByIdAsync(It.IsAny<int>())).ReturnsAsync(Model);

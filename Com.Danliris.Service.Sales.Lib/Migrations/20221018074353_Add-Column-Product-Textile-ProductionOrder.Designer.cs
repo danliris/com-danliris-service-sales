@@ -4,14 +4,16 @@ using Com.Danliris.Service.Sales.Lib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Com.Danliris.Service.Sales.Lib.Migrations
 {
     [DbContext(typeof(SalesDbContext))]
-    partial class SalesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221018074353_Add-Column-Product-Textile-ProductionOrder")]
+    partial class AddColumnProductTextileProductionOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,15 +229,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                         .HasMaxLength(50);
 
                     b.Property<int>("AutoIncrementNumber");
-
-                    b.Property<int>("BOQuantity");
-
-                    b.Property<int>("BookingOrderId");
-
-                    b.Property<int>("BookingOrderItemId");
-
-                    b.Property<string>("BookingOrderNo")
-                        .HasMaxLength(255);
 
                     b.Property<string>("BuyerBrandCode")
                         .HasMaxLength(50);
@@ -2199,8 +2192,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
 
                     b.Property<long>("BookingOrderId");
 
-                    b.Property<double>("CCQuantity");
-
                     b.Property<DateTimeOffset>("CanceledDate");
 
                     b.Property<string>("ComodityCode")
@@ -3347,7 +3338,7 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
 
                     b.Property<string>("ProductTextileCode");
 
-                    b.Property<int?>("ProductTextileId");
+                    b.Property<int>("ProductTextileId");
 
                     b.Property<string>("ProductTextileName");
 

@@ -11,6 +11,17 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 table: "WeavingSalesContract",
                 nullable: true);
 
+            migrationBuilder.AddColumn<int>(
+                name: "Day",
+                table: "WeavingSalesContract",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "DownPayments",
+                table: "WeavingSalesContract",
+                nullable: true);
+
             migrationBuilder.AddColumn<string>(
                 name: "MaterialCode",
                 table: "WeavingSalesContract",
@@ -42,6 +53,17 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
+                name: "PaymentMethods",
+                table: "WeavingSalesContract",
+                nullable: true);
+
+            migrationBuilder.AddColumn<double>(
+                name: "PriceDP",
+                table: "WeavingSalesContract",
+                nullable: false,
+                defaultValue: 0.0);
+
+            migrationBuilder.AddColumn<string>(
                 name: "ProductTypeCode",
                 table: "WeavingSalesContract",
                 maxLength: 25,
@@ -59,8 +81,25 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 maxLength: 255,
                 nullable: true);
 
+            migrationBuilder.AddColumn<double>(
+                name: "precentageDP",
+                table: "WeavingSalesContract",
+                nullable: false,
+                defaultValue: 0.0);
+
             migrationBuilder.AddColumn<string>(
                 name: "BuyerJob",
+                table: "SpinningSalesContract",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "Day",
+                table: "SpinningSalesContract",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "DownPayments",
                 table: "SpinningSalesContract",
                 nullable: true);
 
@@ -113,6 +152,17 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
+                name: "PaymentMethods",
+                table: "SpinningSalesContract",
+                nullable: true);
+
+            migrationBuilder.AddColumn<double>(
+                name: "PriceDP",
+                table: "SpinningSalesContract",
+                nullable: false,
+                defaultValue: 0.0);
+
+            migrationBuilder.AddColumn<string>(
                 name: "ProductTypeCode",
                 table: "SpinningSalesContract",
                 maxLength: 25,
@@ -129,12 +179,40 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 table: "SpinningSalesContract",
                 maxLength: 255,
                 nullable: true);
+
+            migrationBuilder.AddColumn<double>(
+                name: "precentageDP",
+                table: "SpinningSalesContract",
+                nullable: false,
+                defaultValue: 0.0);
 
             migrationBuilder.AddColumn<string>(
                 name: "BuyerJob",
                 table: "FinishingPrintingSalesContracts",
                 nullable: true);
 
+            migrationBuilder.AddColumn<int>(
+                name: "Day",
+                table: "FinishingPrintingSalesContracts",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "DownPayments",
+                table: "FinishingPrintingSalesContracts",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "PaymentMethods",
+                table: "FinishingPrintingSalesContracts",
+                nullable: true);
+
+            migrationBuilder.AddColumn<double>(
+                name: "PriceDP",
+                table: "FinishingPrintingSalesContracts",
+                nullable: false,
+                defaultValue: 0.0);
+
             migrationBuilder.AddColumn<string>(
                 name: "ProductTypeCode",
                 table: "FinishingPrintingSalesContracts",
@@ -153,6 +231,11 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 maxLength: 255,
                 nullable: true);
 
+            migrationBuilder.AddColumn<double>(
+                name: "precentageDP",
+                table: "FinishingPrintingSalesContracts",
+                nullable: false,
+                defaultValue: 0.0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -162,6 +245,14 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 table: "WeavingSalesContract");
 
             migrationBuilder.DropColumn(
+                name: "Day",
+                table: "WeavingSalesContract");
+
+            migrationBuilder.DropColumn(
+                name: "DownPayments",
+                table: "WeavingSalesContract");
+
+            migrationBuilder.DropColumn(
                 name: "MaterialCode",
                 table: "WeavingSalesContract");
 
@@ -182,6 +273,14 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 table: "WeavingSalesContract");
 
             migrationBuilder.DropColumn(
+                name: "PaymentMethods",
+                table: "WeavingSalesContract");
+
+            migrationBuilder.DropColumn(
+                name: "PriceDP",
+                table: "WeavingSalesContract");
+
+            migrationBuilder.DropColumn(
                 name: "ProductTypeCode",
                 table: "WeavingSalesContract");
 
@@ -194,7 +293,19 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 table: "WeavingSalesContract");
 
             migrationBuilder.DropColumn(
+                name: "precentageDP",
+                table: "WeavingSalesContract");
+
+            migrationBuilder.DropColumn(
                 name: "BuyerJob",
+                table: "SpinningSalesContract");
+
+            migrationBuilder.DropColumn(
+                name: "Day",
+                table: "SpinningSalesContract");
+
+            migrationBuilder.DropColumn(
+                name: "DownPayments",
                 table: "SpinningSalesContract");
 
             migrationBuilder.DropColumn(
@@ -230,6 +341,14 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 table: "SpinningSalesContract");
 
             migrationBuilder.DropColumn(
+                name: "PaymentMethods",
+                table: "SpinningSalesContract");
+
+            migrationBuilder.DropColumn(
+                name: "PriceDP",
+                table: "SpinningSalesContract");
+
+            migrationBuilder.DropColumn(
                 name: "ProductTypeCode",
                 table: "SpinningSalesContract");
 
@@ -239,6 +358,10 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
 
             migrationBuilder.DropColumn(
                 name: "ProductTypeName",
+                table: "SpinningSalesContract");
+
+            migrationBuilder.DropColumn(
+                name: "precentageDP",
                 table: "SpinningSalesContract");
 
             migrationBuilder.DropColumn(
@@ -246,6 +369,22 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 table: "FinishingPrintingSalesContracts");
 
             migrationBuilder.DropColumn(
+                name: "Day",
+                table: "FinishingPrintingSalesContracts");
+
+            migrationBuilder.DropColumn(
+                name: "DownPayments",
+                table: "FinishingPrintingSalesContracts");
+
+            migrationBuilder.DropColumn(
+                name: "PaymentMethods",
+                table: "FinishingPrintingSalesContracts");
+
+            migrationBuilder.DropColumn(
+                name: "PriceDP",
+                table: "FinishingPrintingSalesContracts");
+
+            migrationBuilder.DropColumn(
                 name: "ProductTypeCode",
                 table: "FinishingPrintingSalesContracts");
 
@@ -257,6 +396,9 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                 name: "ProductTypeName",
                 table: "FinishingPrintingSalesContracts");
 
+            migrationBuilder.DropColumn(
+                name: "precentageDP",
+                table: "FinishingPrintingSalesContracts");
         }
     }
 }

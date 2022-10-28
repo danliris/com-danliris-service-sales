@@ -4,14 +4,16 @@ using Com.Danliris.Service.Sales.Lib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Com.Danliris.Service.Sales.Lib.Migrations
 {
     [DbContext(typeof(SalesDbContext))]
-    partial class SalesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220624090023_Add-table-sales-contract-WV")]
+    partial class AddtablesalescontractWV
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,15 +191,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<string>("ApprovalCC")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("ApprovalKadiv")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("ApprovalRO")
-                        .HasMaxLength(255);
-
                     b.Property<string>("ApprovedIEBy")
                         .HasMaxLength(50);
 
@@ -227,15 +220,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                         .HasMaxLength(50);
 
                     b.Property<int>("AutoIncrementNumber");
-
-                    b.Property<int>("BOQuantity");
-
-                    b.Property<int>("BookingOrderId");
-
-                    b.Property<int>("BookingOrderItemId");
-
-                    b.Property<string>("BookingOrderNo")
-                        .HasMaxLength(255);
 
                     b.Property<string>("BuyerBrandCode")
                         .HasMaxLength(50);
@@ -1591,8 +1575,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
 
                     b.Property<DateTimeOffset>("DeliverySchedule");
 
-                    b.Property<string>("Description");
-
                     b.Property<string>("DesignMotiveCode")
                         .HasMaxLength(25);
 
@@ -1676,12 +1658,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                         .HasMaxLength(64);
 
                     b.Property<double>("PriceDP");
-
-                    b.Property<string>("ProductTextileCode");
-
-                    b.Property<int>("ProductTextileId");
-
-                    b.Property<string>("ProductTextileName");
 
                     b.Property<string>("ProductTypeCode")
                         .HasMaxLength(25);
@@ -2198,8 +2174,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                     b.Property<bool>("Active");
 
                     b.Property<long>("BookingOrderId");
-
-                    b.Property<double>("CCQuantity");
 
                     b.Property<DateTimeOffset>("CanceledDate");
 
@@ -3345,12 +3319,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                     b.Property<string>("ProcessTypeUnit")
                         .HasMaxLength(1000);
 
-                    b.Property<string>("ProductTextileCode");
-
-                    b.Property<int?>("ProductTextileId");
-
-                    b.Property<string>("ProductTextileName");
-
                     b.Property<string>("ProfileFirstName")
                         .HasMaxLength(1000);
 
@@ -4255,8 +4223,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                     b.Property<string>("BuyerType")
                         .HasMaxLength(255);
 
-                    b.Property<double?>("Claim");
-
                     b.Property<string>("Code")
                         .HasMaxLength(255);
 
@@ -4327,10 +4293,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                         .HasMaxLength(255);
 
                     b.Property<DateTime>("LastModifiedUtc");
-
-                    b.Property<int>("LatePayment");
-
-                    b.Property<int>("LateReturn");
 
                     b.Property<string>("MaterialCode")
                         .HasMaxLength(25);
