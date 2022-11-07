@@ -362,7 +362,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.GarmentBookingOrder
 
             var QueryX = (from a in Query1
                          join b in DbContext.GarmentBookingOrderItems on a.Id equals b.BookingOrderId
-                         join c in DbContext.CostCalculationGarments on a.Id equals c.BookingOrderItemId into cc
+                         join c in DbContext.CostCalculationGarments on b.Id equals c.BookingOrderItemId into cc
                          from CCG in cc.DefaultIfEmpty()
                          where a.HadConfirmed == true && a.IsCanceled == false && b.IsCanceled == false
                                && a.BuyerCode == buyer && a.SectionCode == section && b.ComodityCode == comodity
@@ -420,7 +420,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.GarmentBookingOrder
                              ComodityId = G.Key.ComodityId,
                              ComodityCode = G.Key.ComodityCode,
                              ComodityName = G.Key.ComodityName,
-                             ConfirmQuantity = G.Key.ConfirmQuantity - G.Sum(m => m.Qty),
+                             ConfirmQuantity = (G.Key.ConfirmQuantity * 1.05) - G.Sum(m => m.Qty),
                          }).OrderBy(x => x.BookingOrderNo).ThenBy(x => x.SectionCode).ThenBy(x => x.BuyerCode).ThenBy(x => x.ComodityCode);
 
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);

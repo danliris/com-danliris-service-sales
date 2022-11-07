@@ -134,8 +134,8 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.CostCalculationGarment
                 yield return new ValidationResult("Kuantitas harus diisi", new List<string> { "Quantity" });
             else if (this.Quantity <= 0)
                 yield return new ValidationResult("Kuantitas harus lebih besar dari 0", new List<string> { "Quantity" });
-            else if (this.Quantity > this.BOQuantity * 1.05)
-                yield return new ValidationResult("Allowance Kuantitas Max 5% dari Confirm Quantity Booking Order", new List<string> { "Quantity" });
+            else if (this.Quantity > this.BOQuantity)
+                yield return new ValidationResult("Kuantitas tidak boleh lebih dari Remaining Confirm Quantity Booking Order", new List<string> { "Quantity" });
             else if (this.Efficiency == null || this.Efficiency.Id == 0)
                 yield return new ValidationResult("Tidak ditemukan Efisiensi pada kuantitas ini", new List<string> { "Quantity" });
             if (string.IsNullOrWhiteSpace(this.SizeRange))
@@ -144,8 +144,8 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.CostCalculationGarment
                 yield return new ValidationResult("Delivery Date harus diisi", new List<string> { "DeliveryDate" });
             else if (this.DeliveryDate < DateTimeOffset.Now)
                 yield return new ValidationResult("Delivery Date harus lebih besar dari hari ini", new List<string> { "DeliveryDate" });
-            else if (this.ConfirmDate.AddDays(30) > this.DeliveryDate)
-                yield return new ValidationResult("Selisih Confirm Date dengan Delivery Date harus lebih besar dari 30 hari", new List<string> { "DeliveryDate" });
+            //else if (this.ConfirmDate.AddDays(30) > this.DeliveryDate)
+            //    yield return new ValidationResult("Selisih Confirm Date dengan Delivery Date harus lebih besar dari 30 hari", new List<string> { "DeliveryDate" });
             if (this.SMV_Cutting == null)
                 yield return new ValidationResult("SMV Cutting harus diisi", new List<string> { "SMV_Cutting" });
             else if (this.SMV_Cutting <= 0)
