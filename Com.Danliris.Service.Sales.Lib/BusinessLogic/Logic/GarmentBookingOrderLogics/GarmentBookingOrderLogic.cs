@@ -386,7 +386,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.GarmentBookingOrder
                              CCQuantity = CCG == null ? 0 : CCG.Quantity,
                          });
 
-            var Query = (from x in QueryX
+            var QueryY = (from x in QueryX
                          group new { Qty = x.CCQuantity } by new
                          {
                              x.BookingOrderId,
@@ -423,6 +423,26 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.GarmentBookingOrder
                              ConfirmQuantity = (G.Key.ConfirmQuantity * 1.05) - G.Sum(m => m.Qty),
                          }).OrderBy(x => x.BookingOrderNo).ThenBy(x => x.SectionCode).ThenBy(x => x.BuyerCode).ThenBy(x => x.ComodityCode);
 
+
+            var Query = (from a in QueryY where a.ConfirmQuantity > 0
+
+                          select new GarmentBookingOrderForCCGViewModel
+                          {
+                              BookingOrderId = a.BookingOrderId,
+                              BookingOrderItemId = a.BookingOrderItemId,
+                              BookingOrderNo = a.BookingOrderNo,
+                              ConfirmDate = a.ConfirmDate,
+                              BuyerId = a.BuyerId,
+                              BuyerCode = a.BuyerCode,
+                              BuyerName = a.BuyerName,
+                              SectionId = a.SectionId,
+                              SectionCode = a.SectionCode,
+                              SectionName = a.SectionName,
+                              ComodityId = a.ComodityId,
+                              ComodityCode = a.ComodityCode,
+                              ComodityName = a.ComodityName,
+                              ConfirmQuantity = a.ConfirmQuantity,
+                          });
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
             //Query = QueryHelper<GarmentBookingOrder>.Order(Query, OrderDictionary);
 
