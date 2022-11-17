@@ -88,6 +88,21 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.Facades.GarmentBookingOrderFacad
         }
 
         [Fact]
+        public virtual async void ReadBYNoForCCG_Success()
+        {
+            var dbContext = DbContext(GetCurrentMethod());
+            var serviceProvider = GetServiceProviderMock(dbContext).Object;
+
+            GarmentBookingOrderFacade facade = new GarmentBookingOrderFacade(serviceProvider, dbContext);
+
+            var data = await DataUtil(facade).GetTestData();
+            //var filter = "{BuyerCode : ""}";
+            var Response = facade.ReadByBookingOrderNoForCCG(1, 25, "{}", new List<string>(), "", "{\"BuyerCode\":\"UnitCode\",\"SectionCode\":\"SectionCode\",\"ComodityCode\":\"ComodityCode\"}");
+
+            Assert.NotEqual(Response.Data.Count, 0);
+        }
+
+        [Fact]
         public virtual async void Should_Success_Validate_data()
         {
             var dbContext = DbContext(GetCurrentMethod());

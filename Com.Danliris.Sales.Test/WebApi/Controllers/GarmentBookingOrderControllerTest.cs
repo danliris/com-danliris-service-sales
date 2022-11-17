@@ -227,5 +227,43 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
 
             Assert.Equal((int)HttpStatusCode.InternalServerError, GetStatusCode(response));
         }
+
+        [Fact]
+        public void Should_Success_GetByNoForCCG()
+        {
+
+            var mocks = GetMocks();
+            mocks.Mapper
+                .Setup(s => s.Map<List<GarmentBookingOrderForCCGViewModel>>(It.IsAny<List<GarmentBookingOrderForCCGViewModel>>()))
+                .Returns(new List<GarmentBookingOrderForCCGViewModel>());
+            mocks.Facade
+                .Setup(s => s.ReadByBookingOrderNoForCCG(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(),
+                    It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new ReadResponse<GarmentBookingOrderForCCGViewModel>(new List<GarmentBookingOrderForCCGViewModel>(), 1, new Dictionary<string, string>(), new List<string>()));
+
+            var controller = GetController(mocks);
+            var response = controller.GetForCCG(1, 25, new List<string>(), null, null, null);
+
+            Assert.Equal((int)HttpStatusCode.OK, GetStatusCode(response));
+        }
+
+        [Fact]
+        public void Should_Fail_GetByNoForCCG()
+        {
+
+            var mocks = GetMocks();
+            mocks.Mapper
+                .Setup(s => s.Map<List<GarmentBookingOrderForCCGViewModel>>(It.IsAny<List<GarmentBookingOrderForCCGViewModel>>()))
+                .Returns(new List<GarmentBookingOrderForCCGViewModel>());
+            mocks.Facade
+                .Setup(s => s.ReadByBookingOrderNoForCCG(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(),
+                    It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Throws(new Exception());
+
+            var controller = GetController(mocks);
+            var response = controller.GetForCCG(1, 25, new List<string>(), null, null, null);
+
+            Assert.Equal((int)HttpStatusCode.InternalServerError, GetStatusCode(response));
+        }
     }
 }
