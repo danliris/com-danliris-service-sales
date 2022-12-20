@@ -69,7 +69,7 @@ namespace Com.Danliris.Service.Sales.Lib.AutoMapperProfiles.FinishingPrintingPro
                 .ForPath(d => d.ProductType.Id, opt => opt.MapFrom(s => s.ProductTypeId))
                 .ForPath(d => d.ProductType.Name, opt => opt.MapFrom(s => s.ProductTypeName))
                 .ForPath(d => d.ProductType.Code, opt => opt.MapFrom(s => s.ProductTypeCode))
-          
+
                 .ForPath(d => d.ProductTextile.Id, opt => opt.MapFrom(s => s.ProductTextileId))
                 .ForPath(d => d.ProductTextile.Code, opt => opt.MapFrom(s => s.ProductTextileCode))
                 .ForPath(d => d.ProductTextile.Name, opt => opt.MapFrom(s => s.ProductTextileName))

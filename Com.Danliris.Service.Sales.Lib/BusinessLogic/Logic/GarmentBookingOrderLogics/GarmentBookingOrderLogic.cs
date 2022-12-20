@@ -433,17 +433,20 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.GarmentBookingOrder
                              BookingOrderItemId = a.BookingOrderItemId,
                              BookingOrderNo = a.BookingOrderNo,
                              ConfirmDate = a.ConfirmDate,
+
                              BuyerId = a.BuyerId,
                              BuyerCode = a.BuyerCode,
                              BuyerName = a.BuyerName,
                              SectionId = a.SectionId,
                              SectionCode = a.SectionCode,
                              SectionName = a.SectionName,
+
                              ComodityId = a.ComodityId,
                              ComodityCode = a.ComodityCode,
                              ComodityName = a.ComodityName,
                              ConfirmQuantity = a.ConfirmQuantity,
                          });
+
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
             //Query = QueryHelper<GarmentBookingOrder>.Order(Query, OrderDictionary);
 

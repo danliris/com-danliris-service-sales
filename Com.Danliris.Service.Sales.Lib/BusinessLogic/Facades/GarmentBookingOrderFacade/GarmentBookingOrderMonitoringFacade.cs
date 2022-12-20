@@ -136,7 +136,6 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.GarmentBookingOrd
                              CCQuantity = G.Sum(m => m.CCQty) == 0 ? 0 : G.Sum(m => m.CCQty),
                              RemainingQuantity = G.Sum(m => m.CCQty) == 0 ? Convert.ToInt32((1.05 * G.Key.ConfirmQuantity)) : (G.Key.ConfirmQuantity - Convert.ToInt32((1.05 * G.Key.ConfirmQuantity))) <= 0 ? 0 : Convert.ToInt32((1.05 * G.Key.ConfirmQuantity)) - G.Sum(m => m.CCQty),
                              //StatusConfirm = a.ConfirmedQuantity == 0 ? "Belum Dikonfirmasi" : a.ConfirmedQuantity > 0 ? "Sudah Dikonfirmasi" : "-",
-
                          }).OrderBy(x => x.BookingOrderNo).ThenBy(x => x.BuyerName);
             //
             foreach (var query in Query)

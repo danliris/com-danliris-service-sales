@@ -84,6 +84,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.FinishingPrinting
                     ProductTextileCode = field.ProductTextileCode,
                     ProductTextileName = field.ProductTextileName,
                     Details = field.Details
+
                 });
 
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
