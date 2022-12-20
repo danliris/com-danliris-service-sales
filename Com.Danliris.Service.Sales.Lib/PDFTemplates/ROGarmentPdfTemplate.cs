@@ -114,19 +114,25 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             cell_top.Phrase = new Phrase("KONVEKSI", normal_font);
             table_top.AddCell(cell_top);
             table_top.AddCell(cell_colon);
-            cell_top.Phrase = new Phrase($"{viewModel.CostCalculationGarment.Unit.Code + "      SEKSI   :   " + viewModel.CostCalculationGarment.Section}", normal_font);
+            cell_top.Phrase = new Phrase($"{viewModel.CostCalculationGarment.Unit.Code + "            SEKSI   :   " + viewModel.CostCalculationGarment.Section}", normal_font);
             table_top.AddCell(cell_top);
 
             cell_top.Phrase = new Phrase("QUANTITY", normal_font);
             table_top.AddCell(cell_top);
             table_top.AddCell(cell_colon);
-            cell_top.Phrase = new Phrase($"{viewModel.Total.ToString()} {viewModel.CostCalculationGarment.UOM.Unit}" , normal_font);
+            cell_top.Phrase = new Phrase($"{viewModel.Total.ToString()} {viewModel.CostCalculationGarment.UOM.Unit}", normal_font);
             table_top.AddCell(cell_top);
 
             cell_top.Phrase = new Phrase("SIZE RANGE", normal_font);
             table_top.AddCell(cell_top);
             table_top.AddCell(cell_colon);
             cell_top.Phrase = new Phrase($"{viewModel.CostCalculationGarment.SizeRange}", normal_font);
+            table_top.AddCell(cell_top);
+
+            cell_top.Phrase = new Phrase("MARKETING", normal_font);
+            table_top.AddCell(cell_top);
+            table_top.AddCell(cell_colon);
+            cell_top.Phrase = new Phrase($"{viewModel.CostCalculationGarment.MarketingName}", normal_font);
             table_top.AddCell(cell_top);
 
             cell_top.Phrase = new Phrase("DESC", normal_font);
@@ -305,7 +311,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             table_fabric.SpacingBefore = 5f;
             table_fabric.ExtendLastRow = false;
             document.Add(table_fabric);
-            
+
             #endregion
 
             #region Table Accessories
@@ -726,7 +732,7 @@ namespace Com.Danliris.Service.Sales.Lib.PDFTemplates
             table_signature.SpacingBefore = 5f;
             table_signature.ExtendLastRow = false;
             document.Add(table_signature);
-            
+
             #endregion
 
             document.Close();
