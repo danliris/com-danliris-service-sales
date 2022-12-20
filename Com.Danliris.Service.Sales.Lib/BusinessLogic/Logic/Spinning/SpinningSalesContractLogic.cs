@@ -13,7 +13,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.Spinning
 {
     public class SpinningSalesContractLogic : BaseLogic<SpinningSalesContractModel>
     {
-        public SpinningSalesContractLogic(IServiceProvider serviceProvider, IIdentityService identityService, SalesDbContext dbContext) : base(identityService,serviceProvider, dbContext)
+        public SpinningSalesContractLogic(IServiceProvider serviceProvider, IIdentityService identityService, SalesDbContext dbContext) : base(identityService, serviceProvider, dbContext)
         {
         }
         public override ReadResponse<SpinningSalesContractModel> Read(int page, int size, string order, List<string> select, string keyword, string filter)

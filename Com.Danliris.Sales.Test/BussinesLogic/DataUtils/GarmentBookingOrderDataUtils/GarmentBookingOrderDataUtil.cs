@@ -34,7 +34,7 @@ namespace Com.Danliris.Sales.Test.BussinesLogic.DataUtils.GarmentBookingOrderDat
                 HadConfirmed = true,
                 IsCanceled = false,
                 Remark = "Remark",
-                DeliveryDate= DateTime.Now.AddDays(30),
+                DeliveryDate = DateTime.Now.AddDays(30),
                 Items = new List<GarmentBookingOrderItem>()
             };
 

@@ -74,6 +74,7 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.FinishingPrinting
                     YarnMaterialName = field.YarnMaterialName,
                     MaterialWidth = field.MaterialWidth,
                     LastModifiedUtc = field.LastModifiedUtc,
+
                     BuyerJob = field.BuyerJob,
                     ProductTypeId = field.ProductTypeId,
                     ProductTypeCode = field.ProductTypeCode,

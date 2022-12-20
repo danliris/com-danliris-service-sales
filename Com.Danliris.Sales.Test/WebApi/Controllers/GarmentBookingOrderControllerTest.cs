@@ -201,7 +201,7 @@ namespace Com.Danliris.Sales.Test.WebApi.Controllers
             mocks.Facade
                 .Setup(s => s.ReadByBookingOrderNo(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(),
                     It.IsAny<List<string>>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(new ReadResponse<GarmentBookingOrder>(new List<GarmentBookingOrder>(), 1,new Dictionary<string, string>(),new List<string>()));
+                .Returns(new ReadResponse<GarmentBookingOrder>(new List<GarmentBookingOrder>(), 1, new Dictionary<string, string>(), new List<string>()));
 
             var controller = GetController(mocks);
             var response = controller.Get(1, 25, new List<string>(), null, null, null);

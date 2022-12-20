@@ -116,6 +116,7 @@ namespace Com.Danliris.Service.Sales.WebApi
 				.AddTransient<ICostCalculationGarment,CostCalculationGarmentFacade>()
                 .AddTransient<ICostCalculationGarmentByUnitReport, CostCalculationGarmentByUnitReportFacade>()
                 .AddTransient<ICostCalculationGarmentBySectionReport, CostCalculationGarmentBySectionReportFacade>()
+                .AddTransient<ICostCalculationGarmentByMarketingReport, CostCalculationGarmentByMarketingReportFacade>()
                 .AddTransient<ICostCalculationGarmentByBuyer1Report, CostCalculationGarmentByBuyer1ReportFacade>()
                 .AddTransient<ICostCalculationGarmentByBuyer2Report, CostCalculationGarmentByBuyer2ReportFacade>()
                 .AddTransient<ISMVGarmentByUnitReport, SMVGarmentByUnitReportFacade>()
@@ -123,6 +124,7 @@ namespace Com.Danliris.Service.Sales.WebApi
                 .AddTransient<IDistributionROGarmentReport, DistributionROGarmentReportFacade>()
                 .AddTransient<ICostCalculationGarmentValidationReport, CostCalculationGarmentValidationReportFacade>()
                 .AddTransient<IProfitGarmentBySectionReport, ProfitGarmentBySectionReportFacade>()
+                .AddTransient<IProfitGarmentByMarketingReport, ProfitGarmentByMarketingReportFacade>()
                 .AddTransient<IAvailableROGarmentReportFacade, AvailableROGarmentReportFacade>()
                 .AddTransient<ICostCalculationGarmentApprovalReport, CostCalculationGarmentApprovalReportFacade>()
                 .AddTransient<IProfitGarmentByComodityReport, ProfitGarmentByComodityReportFacade>()
@@ -189,6 +191,7 @@ namespace Com.Danliris.Service.Sales.WebApi
 				.AddTransient<CostCalculationGarmentMaterialLogic>()
                 .AddTransient<CostCalculationByUnitReportLogic>()
                 .AddTransient<CostCalculationBySectionReportLogic>()
+                .AddTransient<CostCalculationByMarketingReportLogic>()
                 .AddTransient<CostCalculationByBuyer1ReportLogic>()
                 .AddTransient<CostCalculationByBuyer2ReportLogic>()
                 .AddTransient<SMVGarmentByUnitReportLogic>()
@@ -196,6 +199,7 @@ namespace Com.Danliris.Service.Sales.WebApi
                 .AddTransient<DistributionROGarmentReportLogic>()
                 .AddTransient<CostCalculationGarmentValidationReportLogic>()
                 .AddTransient<ProfitGarmentBySectionReportLogic>()
+                .AddTransient<ProfitGarmentByMarketingReportLogic>()
                 .AddTransient<AvailableROGarmentReportLogic>()
                 .AddTransient<CostCalculationGarmentApprovalReportLogic>()
                 .AddTransient<ProfitGarmentByComodityReportLogic>()
@@ -363,11 +367,11 @@ namespace Com.Danliris.Service.Sales.WebApi
             }
 
             /* Update Database */
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                SalesDbContext context = serviceScope.ServiceProvider.GetService<SalesDbContext>();
-                context.Database.Migrate();
-            }
+            //using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            //{
+            //    SalesDbContext context = serviceScope.ServiceProvider.GetService<SalesDbContext>();
+            //    context.Database.Migrate();
+            //}
 
             app.UseAuthentication();
             app.UseCors(SALES_POLICY);

@@ -37,6 +37,8 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.CostCalculationGarment
         public string RO_Number { get; set; }
         public string Section { get; set; }
         public string SectionName { get; set; }
+        public string MarketingName { get; set; }
+        public string ResponsibleName { get; set; }
         public string ApprovalCC { get; set; }
         public string ApprovalRO { get; set; }
         public string ApprovalKadiv { get; set; }
@@ -67,8 +69,9 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.CostCalculationGarment
 
         public int BookingOrderId { get; set; }
         public string BookingOrderNo { get; set; }
-        public int? BOQuantity { get; set; }
+        public double BOQuantity { get; set; }
         public int BookingOrderItemId { get; set; }
+        public Approval ApprovalMkt { get; set; }
 
         public Approval ApprovalMD { get; set; }
         public Approval ApprovalPurchasing { get; set; }
@@ -111,6 +114,9 @@ namespace Com.Danliris.Service.Sales.Lib.ViewModels.CostCalculationGarment
             {
                 yield return new ValidationResult("No Booking Order harus diisi", new List<string> { "BookingOrder" });
             }
+
+            if (string.IsNullOrWhiteSpace(this.MarketingName))
+                yield return new ValidationResult("Marketing Garment harus diisi", new List<string> { "MarketingName" });
 
             if (string.IsNullOrWhiteSpace(this.Article))
                 yield return new ValidationResult("Nama Artikel harus diisi", new List<string> { "Article" });

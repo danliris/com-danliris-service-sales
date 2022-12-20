@@ -133,8 +133,9 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.GarmentBookingOrd
                              LastModifiedUtc = G.Key.LastModifiedUtc,
                              NotConfirmedQuantity = G.Key.NotConfirmedQuantity,
                              SurplusQuantity = G.Key.SurplusQuantity,
-                             CCQuantity = G.Sum(m => m.CCQty),
-                             RemainingQuantity = Convert.ToInt32((1.1025 * G.Key.ConfirmQuantity)) - G.Sum(m => m.CCQty),
+                             CCQuantity = G.Sum(m => m.CCQty) == 0 ? 0 : G.Sum(m => m.CCQty),
+                             RemainingQuantity = G.Sum(m => m.CCQty) == 0 ? Convert.ToInt32((1.05 * G.Key.ConfirmQuantity)) : (G.Key.ConfirmQuantity - Convert.ToInt32((1.05 * G.Key.ConfirmQuantity))) <= 0 ? 0 : Convert.ToInt32((1.05 * G.Key.ConfirmQuantity)) - G.Sum(m => m.CCQty),
+                             //StatusConfirm = a.ConfirmedQuantity == 0 ? "Belum Dikonfirmasi" : a.ConfirmedQuantity > 0 ? "Sudah Dikonfirmasi" : "-",
                          }).OrderBy(x => x.BookingOrderNo).ThenBy(x => x.BuyerName);
             //
             foreach (var query in Query)
@@ -189,11 +190,11 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.GarmentBookingOrd
                                   StatusConfirm = "Belum Dikonfirmasi",
                                   StatusBooking = a.IsBlockingPlan == true ? "Sudah Dibuat Master Plan" : a.ConfirmedQuantity == 0 && a.IsBlockingPlan == false ? "Booking" : a.ConfirmedQuantity > 0 && a.IsBlockingPlan == false ? "Confirmed" : "-",
                                   OrderLeft = (a.OrderQuantity - a.ConfirmedQuantity) > 0 ? (a.OrderQuantity - a.ConfirmedQuantity).ToString() : "0",
-                                  DateDiff = ((TimeSpan)(a.DeliveryDate.AddHours(offset) - today)).Days <= 45 && ((TimeSpan)(a.DeliveryDate.AddHours(offset) - today)).Days >= 0 ? ((TimeSpan)(a.DeliveryDate.AddHours(offset) - today)).Days.ToString() : "-",
+                                  //DateDiff = ((TimeSpan)(a.DeliveryDate.AddHours(offset) - today)).Days <= 45 && ((TimeSpan)(a.DeliveryDate.AddHours(offset) - today)).Days >= 0 ? ((TimeSpan)(a.DeliveryDate.AddHours(offset) - today)).Days.ToString() : "-",
                                   row_count = 1,
                                   LastModifiedUtc = a.LastModifiedUtc,
                                   NotConfirmedQuantity = a.ExpiredBookingQuantity + a.CanceledQuantity,
-                                  SurplusQuantity = (a.ConfirmedQuantity - a.OrderQuantity) > 0 ? (a.ConfirmedQuantity - a.OrderQuantity).ToString() : "-"
+                                  //SurplusQuantity = (a.ConfirmedQuantity - a.OrderQuantity) > 0 ? (a.ConfirmedQuantity - a.OrderQuantity).ToString() : "-"
                               }
                 );
                 foreach (var query in query2.OrderBy(o => o.BookingOrderNo))
@@ -292,13 +293,13 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.GarmentBookingOrd
             result.Columns.Add(new DataColumn() { ColumnName = "Komoditi", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Jumlah Confirm", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Budget Turun", DataType = typeof(string) });
-            result.Columns.Add(new DataColumn() { ColumnName = "Remaining Qty Confirm", DataType = typeof(string) });
+            result.Columns.Add(new DataColumn() { ColumnName = "Sisa Budget Turun", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Tanggal Pengiriman (confirm)", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Tanggal Confirm", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Keterangan", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Status Confirm", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Status Booking Order", DataType = typeof(string) });
-            result.Columns.Add(new DataColumn() { ColumnName = "Sisa Order (Belum Confirm)", DataType = typeof(string) });
+            result.Columns.Add(new DataColumn() { ColumnName = "Sisa Order + 5% (Belum Confirm)", DataType = typeof(string) });
             //result.Columns.Add(new DataColumn() { ColumnName = "Seilisih Hari (dari Tanggal Pengiriman)", DataType = typeof(string) });
             result.Columns.Add(new DataColumn() { ColumnName = "Not Confirmed Order (MINUS)", DataType = typeof(string) });
             //result.Columns.Add(new DataColumn() { ColumnName = "Over Confirm (SURPLUS)", DataType = typeof(string) });
@@ -360,8 +361,8 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.GarmentBookingOrd
                             mergeCells.Add(($"C{rowPosition - counterTemp}:C{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                             mergeCells.Add(($"D{rowPosition - counterTemp}:D{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                             mergeCells.Add(($"E{rowPosition - counterTemp}:E{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
-                            mergeCells.Add(($"K{rowPosition - counterTemp}:K{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
-                            mergeCells.Add(($"L{rowPosition - counterTemp}:L{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
+                            //mergeCells.Add(($"K{rowPosition - counterTemp}:K{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
+                            //mergeCells.Add(($"L{rowPosition - counterTemp}:L{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                             mergeCells.Add(($"M{rowPosition - counterTemp}:M{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                             mergeCells.Add(($"N{rowPosition - counterTemp}:N{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                             mergeCells.Add(($"O{rowPosition - counterTemp}:O{rowPosition - 1}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
@@ -380,8 +381,8 @@ namespace Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.GarmentBookingOrd
                     mergeCells.Add(($"C{rowPosition + 1 - counterTemp}:C{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                     mergeCells.Add(($"D{rowPosition + 1 - counterTemp}:D{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                     mergeCells.Add(($"E{rowPosition + 1 - counterTemp}:E{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
-                    mergeCells.Add(($"K{rowPosition + 1 - counterTemp}:K{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
-                    mergeCells.Add(($"L{rowPosition + 1 - counterTemp}:L{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
+                   //mergeCells.Add(($"K{rowPosition + 1 - counterTemp}:K{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
+                   //mergeCells.Add(($"L{rowPosition + 1 - counterTemp}:L{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                     mergeCells.Add(($"M{rowPosition + 1 - counterTemp}:M{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                     mergeCells.Add(($"N{rowPosition + 1 - counterTemp}:N{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));
                     mergeCells.Add(($"O{rowPosition + 1 - counterTemp}:O{rowPosition}", OfficeOpenXml.Style.ExcelHorizontalAlignment.Left, OfficeOpenXml.Style.ExcelVerticalAlignment.Center));

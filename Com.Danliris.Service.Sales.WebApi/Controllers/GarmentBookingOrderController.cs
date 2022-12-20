@@ -32,7 +32,7 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
         }
 
         [HttpPut("BOCancel/{id}")]
-        public async Task<IActionResult> CancelLeftOvers([FromRoute]int id, [FromBody] GarmentBookingOrderViewModel viewModel)
+        public async Task<IActionResult> CancelLeftOvers([FromRoute] int id, [FromBody] GarmentBookingOrderViewModel viewModel)
         {
             IdentityService.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
 
@@ -50,7 +50,7 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
         }
 
         [HttpPut("BODelete/{id}")]
-        public async Task<IActionResult> DeleteLeftOvers([FromRoute]int id, [FromBody] GarmentBookingOrderViewModel viewModel)
+        public async Task<IActionResult> DeleteLeftOvers([FromRoute] int id, [FromBody] GarmentBookingOrderViewModel viewModel)
         {
             IdentityService.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
 
@@ -68,7 +68,7 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
         }
 
         [HttpGet("read-by-no")]
-        public IActionResult Get(int page = 1, int size = 25, [Bind(Prefix = "Select[]")]List<string> select = null, string order = "{}", string keyword = null, string filter = "{}")
+        public IActionResult Get(int page = 1, int size = 25, [Bind(Prefix = "Select[]")] List<string> select = null, string order = "{}", string keyword = null, string filter = "{}")
         {
             try
             {
@@ -92,7 +92,7 @@ namespace Com.Danliris.Service.Sales.WebApi.Controllers
         }
 
         [HttpGet("read-by-no-for-ccg")]
-        public IActionResult GetForCCG(int page = 1, int size = 25, [Bind(Prefix = "Select[]")]List<string> select = null, string order = "{}", string keyword = null, string filter = "{}")
+        public IActionResult GetForCCG(int page = 1, int size = 25, [Bind(Prefix = "Select[]")] List<string> select = null, string order = "{}", string keyword = null, string filter = "{}")
         {
             try
             {

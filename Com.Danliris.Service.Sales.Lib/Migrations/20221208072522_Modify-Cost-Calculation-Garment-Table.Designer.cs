@@ -4,14 +4,16 @@ using Com.Danliris.Service.Sales.Lib;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Com.Danliris.Service.Sales.Lib.Migrations
 {
     [DbContext(typeof(SalesDbContext))]
-    partial class SalesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208072522_Modify-Cost-Calculation-Garment-Table")]
+    partial class ModifyCostCalculationGarmentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,11 +215,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
 
                     b.Property<DateTimeOffset>("ApprovedMDDate");
 
-                    b.Property<string>("ApprovedMktBy")
-                        .HasMaxLength(50);
-
-                    b.Property<DateTimeOffset>("ApprovedMktDate");
-
                     b.Property<string>("ApprovedPPICBy")
                         .HasMaxLength(50);
 
@@ -330,8 +327,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
 
                     b.Property<bool>("IsApprovedMD");
 
-                    b.Property<bool>("IsApprovedMkt");
-
                     b.Property<bool>("IsApprovedPPIC");
 
                     b.Property<bool>("IsApprovedPurchasing");
@@ -363,9 +358,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                     b.Property<DateTime>("LastModifiedUtc");
 
                     b.Property<int>("LeadTime");
-
-                    b.Property<string>("MarketingName")
-                        .HasMaxLength(255);
 
                     b.Property<double>("NETFOB");
 
@@ -415,9 +407,6 @@ namespace Com.Danliris.Service.Sales.Lib.Migrations
                     b.Property<int>("RateId");
 
                     b.Property<double>("RateValue");
-
-                    b.Property<string>("ResponsibleName")
-                        .HasMaxLength(255);
 
                     b.Property<double>("Risk");
 
