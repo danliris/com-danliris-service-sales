@@ -89,6 +89,9 @@ using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface.DOStock;
 using Com.Danliris.Service.Sales.Lib.BusinessLogic.Logic.DyeingPrintingReportLogics;
 using Com.Danliris.Service.Sales.Lib.BusinessLogic.Interface.DyeingPrintingReportInterface;
 using Com.Danliris.Service.Sales.Lib.BusinessLogic.Facades.DyeingPrintingReportFacades;
+using System;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
 
 namespace Com.Danliris.Service.Sales.WebApi
 {
@@ -295,14 +298,25 @@ namespace Com.Danliris.Service.Sales.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection") ?? Configuration["DefaultConnection"];
-            string connectionStringPurchasing = Configuration.GetConnectionString("PurchasingConnection") ?? Configuration["PurchasingConnection"];
+            //string connectionString = Configuration.GetConnectionString("DefaultConnection") ?? Configuration["DefaultConnection"];
+            //string connectionStringPurchasing = Configuration.GetConnectionString("PurchasingConnection") ?? Configuration["PurchasingConnection"];
             string connectionStringLocalMerchandiser = Configuration.GetConnectionString("LocalMerchandiserConnection") ?? Configuration["LocalMerchandiserConnection"];
 
-            Com.Danliris.Service.Sales.Lib.Helpers.APIEndpoint.ConnectionString = connectionString;
+            //Com.Danliris.Service.Sales.Lib.Helpers.APIEndpoint.ConnectionString = connectionString;
+
+            var keyVaultEnpoint = new Uri(Configuration["VaultKey"]);
+            var secretClient = new SecretClient(keyVaultEnpoint, new DefaultAzureCredential());
+            
+            KeyVaultSecret kvsDB = secretClient.GetSecret(Configuration["VaultKeyDbSecret"]);
+            KeyVaultSecret kvsServer = secretClient.GetSecret(Configuration["VaultKeyServerSecret"]);
+            KeyVaultSecret kvsServerP = secretClient.GetSecret(Configuration["VaultKeyDbSecretPurchasing"]);
+
             /* Register */
-            services.AddDbContext<SalesDbContext>(options => options.UseSqlServer(connectionString));
-            services.AddDbContext<PurchasingDbContext>(options => SqlServerDbContextOptionsExtensions.UseSqlServer(options,connectionStringPurchasing));
+            //services.AddDbContext<SalesDbContext>(options => options.UseSqlServer(connectionString));
+            //services.AddDbContext<PurchasingDbContext>(options => SqlServerDbContextOptionsExtensions.UseSqlServer(options,connectionStringPurchasing));
+            services.AddDbContext<SalesDbContext>(option => option.UseSqlServer(string.Concat(kvsDB.Value, kvsServer.Value)));
+            services.AddDbContext<PurchasingDbContext>(option => option.UseSqlServer(string.Concat(kvsDB.Value, kvsServerP.Value)));
+
             services.AddTransient<ILocalMerchandiserDbContext>(s => new LocalMerchandiserDbContext(connectionStringLocalMerchandiser));
             RegisterFacades(services);
             RegisterLogic(services);
