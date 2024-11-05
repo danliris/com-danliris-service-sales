@@ -306,15 +306,16 @@ namespace Com.Danliris.Service.Sales.WebApi
 
             var keyVaultEnpoint = new Uri(Configuration["VaultKey"]);
             var secretClient = new SecretClient(keyVaultEnpoint, new DefaultAzureCredential());
-
-            KeyVaultSecret kvs = secretClient.GetSecret(Configuration["VaultKeySecret"]);
-            KeyVaultSecret kvsp = secretClient.GetSecret(Configuration["VaultKeySecretPurchasing"]);
+            
+            KeyVaultSecret kvsDB = secretClient.GetSecret(Configuration["VaultKeyDbSecret"]);
+            KeyVaultSecret kvsServer = secretClient.GetSecret(Configuration["VaultKeyServerSecret"]);
+            KeyVaultSecret kvsServerP = secretClient.GetSecret(Configuration["VaultKeyDbSecretPurchasing"]);
 
             /* Register */
             //services.AddDbContext<SalesDbContext>(options => options.UseSqlServer(connectionString));
             //services.AddDbContext<PurchasingDbContext>(options => SqlServerDbContextOptionsExtensions.UseSqlServer(options,connectionStringPurchasing));
-            services.AddDbContext<SalesDbContext>(option => option.UseSqlServer(kvs.Value));
-            services.AddDbContext<PurchasingDbContext>(option => option.UseSqlServer(kvsp.Value));
+            services.AddDbContext<SalesDbContext>(option => option.UseSqlServer(string.Concat(kvsDB.Value, kvsServer.Value)));
+            services.AddDbContext<PurchasingDbContext>(option => option.UseSqlServer(string.Concat(kvsDB.Value, kvsServerP.Value)));
 
             services.AddTransient<ILocalMerchandiserDbContext>(s => new LocalMerchandiserDbContext(connectionStringLocalMerchandiser));
             RegisterFacades(services);
